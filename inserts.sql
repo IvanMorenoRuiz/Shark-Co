@@ -38,7 +38,7 @@ INSERT INTO shakandco.tbl_alumno (num_matricula, dni_alu, nombre_alu, apellido_a
        (123456783, '123456783G', 'Carla', 'Maldonado'),
        (123456782, '123456782H', 'Wilson', 'Alfredo'),
        (123456781, '123456782I', 'Alberto', 'Bermejo'),
-       (123456780, '123456781J', 'Ricard', 'Casals',),
+       (123456780, '123456781J', 'Ricard', 'Casals'),
        (123456779, '123456780K', 'Olga', 'Clemente'),
        (123456778, '123456779L', 'Manel', 'Garcia'),
        (123456777, '123456778M', 'Sergio', 'Leon'),
