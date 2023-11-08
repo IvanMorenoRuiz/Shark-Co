@@ -2,7 +2,7 @@
 session_start();
 
 if(!filter_has_var(INPUT_POST,'inicio')) {
-    header('Location : '. './index.php');
+    header('Location : '. '../index.php');
     exit();
     } else {// comprobamos que la solicitud se envie con POST
     $email = $_POST["email"];
@@ -11,7 +11,7 @@ if(!filter_has_var(INPUT_POST,'inicio')) {
 if (strpos($email, "@fje.edu") === false) {
     // Utiliza la función strpos para buscar la cadena "@fje.edu" en el correo electrónico ($email).
     // Si no se encuentra la cadena, strpos devolverá `false`.
-    header("Location: index.php?correo");
+    header("Location: ../index.php?correo");
 
     exit();
     // La función exit() termina inmediatamente la ejecución del script PHP, lo que significa que el código posterior a esta línea no se ejecutará.
@@ -52,11 +52,11 @@ if (strpos($email, "@fje.edu") === false) {
             // echo "(Location : './paginaamostrar.html')";
         } else {
             // Si la contraseña no coincide, se redirige de vuelta a la página de inicio de sesión con un mensaje de error.
-            header("Location: index.php?error");
+            header("Location: ../index.php?error");
         }
     } else {
         // Si el correo electrónico no existe en la base de datos, se redirige de vuelta a la página de inicio de sesión con un mensaje de error.
-        header("Location: index.php?error");
+        header("Location: ../index.php?error");
     }
 
     // Se cierra el statement de MySQL.
