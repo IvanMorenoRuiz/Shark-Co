@@ -80,30 +80,27 @@ if (isset($_POST['eliminar_alumno'])) {
             </nav> -->
             <div class="alta flex">
                 <a href="#popupalta"><button class="altaboton button flex">Alta</button></a>
-                    <form class="buscador flex" method="POST" action="">
-                        <input type="text" name="nombre" placeholder="Buscar por nombre">
-                        <button type="submit" name="buscar">Buscar</button>
-                    </form>
+                <form class="buscador flex" method="POST" action="">
+                    <input type="text" name="nombre" placeholder="Buscar por nombre">
+                    <button type="submit" name="buscar">Buscar</button>
+                </form>
             </div>
         </header>
         <div class="alumnos">
             <!-- TABLA ALUMNOS -->
             <div id="tablaAlumnos">
-                <div>
+                <!-- <div>
                     <h3 id="titulo">Tabla Alumnos</h3>
-                </div>
-                <table>
+                </div> -->
+                <table class="tabla1 separaciones">
 
                     <thead>
                         <tr class="noresaltar">
                             <th class="titulos">Id</th>
+                            <th class="titulos">Matricula</th>
                             <th class="titulos">DNI</th>
                             <th class="titulos">Nombre</th>
-                            <th class="titulos">Primer Apellido</th>
-                            <th class="titulos">Segundo Apellido</th>
-                            <th class="titulos">Email</th>
-                            <th class="titulos">Telefono</th>
-                            <th class="titulos">Clase</th>
+                            <th class="titulos">Apellidos</th>
                             <th class="titulos"></th>
                             <th class="titulos"></th>
                         </tr>
@@ -116,12 +113,9 @@ if (isset($_POST['eliminar_alumno'])) {
                                 echo "<tr>";
                                 echo "<td class='primerosbordes'>" . $row["num_matricula"] . "</td>";
                                 echo "<td>" . $row["dni_alu"] . "</td>";
+                                echo "<td>" . $row["dni_alu"] . "   </td>";
                                 echo "<td>" . $row["nombre_alu"] . "</td>";
-                                echo "<td>" . $row["apellido1_alu"] . "</td>";
-                                echo "<td>" . $row["apellido2_alu"] . "</td>";
-                                echo "<td>" . $row["email_alu"] . "</td>";
-                                echo "<td>" . $row["telf_alu"] . "</td>";
-                                echo "<td class='ultimosbordes'>" . $row["clase"] . "</td>";
+                                echo "<td class='ultimosbordes'>" . $row["apellido1_alu"] . "</td>";
                                 echo "<td class='sinfondo nohover'><a href='formEditarAlumnos.php?num_matricula=" . $row["num_matricula"] . "'><button id='editar' class='editar'>Editar</button></a></td>";
                                 echo "<td class='sinfondo nohover'><a href='eliminaralumnos.php?num_matricula=" . $row["num_matricula"] . "'><button id='eliminar'>Eliminar</button></a></td>";
                                 echo "</tr>";
@@ -133,63 +127,6 @@ if (isset($_POST['eliminar_alumno'])) {
             </div>
         </div>
         <!-- ---------------- -->
-        <!-- TABLA PROFESORES -->
-        <div id="tablaProfesores">
-            <div>
-                <h3 id="titulo">Tabla Profesores</h3>
-            </div>
-            <table>
-
-                <thead>
-                    <tr class="noresaltar">
-                        <th class="titulos">Id</th>
-                        <th class="titulos">Nombre</th>
-                        <th class="titulos">Primer Apellido</th>
-                        <th class="titulos">Segundo Apellido</th>
-                        <th class="titulos">Email</th>
-                        <th class="titulos">Telefono</th>
-                        <th class="titulos">Departamento</th>
-                        <th class="titulos">Salario</th>
-                        <th class="titulos"></th>
-                        <th class="titulos"></th>
-                    </tr>
-                </thead>
-
-                <tbody>
-                    <?php
-                    if ($result2) {
-                        while ($row = $result2->fetch_assoc()) {
-                            echo "<tr>";
-                            echo "<td>" . $row["dni_prof"] . "</td>";
-                            echo "<td>" . $row["nombre_prof"] . "</td>";
-                            echo "<td>" . $row["apellido1_prof"] . "</td>";
-                            echo "<td>" . $row["apellido2_prof"] . "</td>";
-                            echo "<td>" . $row["email_prof"] . "</td>";
-                            echo "<td>" . $row["telf_prof"] . "</td>";
-                            echo "<td>" . $row["dept_prof"] . "</td>";
-                            echo "<td>" . $row["sal_prof"] . "</td>";
-                            echo "<td><a href='formEditarProfesores.php?dni_prof=" . $row["dni_prof"] . "'><button id='editar'>Editar</button></a></td>";
-                            echo "<td><a href='eliminarprofesores.php?dni_prof=" . $row["dni_prof"] . "'><button id='eliminar'>Eliminar</button></a></td>";
-                            echo "</tr>";
-                        }
-                    }
-                    ?>
-                </tbody>
-            </table>
-        </div>
-        <!-- ---------------- -->
-        <!-- POPUP ALTA -->
-        <div id="popupalta" class="overlay">
-            <div class="popup">
-                <h2 class="flex">Dar de Alta</h2>
-                <a class="close" href="#">&times;</a>
-                <div class="content">
-                    <a href="./formAltaAlumnos.php"><button class="popupaltaboton">ALUMNO</button></a>
-                    <a href="./formAltaProfesores.php"><button class="popupaltaboton">PROFESOR</button></a>
-                </div>
-            </div>
-        </div>
-        <!-- ----------------------- -->
 </body>
 
 <script>
@@ -242,15 +179,23 @@ if (isset($_POST['eliminar_alumno'])) {
     }
 
     header {
+        background-image: linear-gradient(rgba(0, 0, 0, 1) 15%, rgba(0, 0, 0, 0.6) 50%, rgba(0, 0, 0, 0.1) 90%, transparent 100%);
+
         display: flex;
         align-items: center;
         justify-content: space-evenly;
         width: 100%;
-        background-image: linear-gradient(rgba(0, 0, 0, 1) 15%, rgba(0, 0, 0, 0.6) 50%, rgba(0, 0, 0, 0.1) 90%, transparent 100%);
         height: 15vh;
         z-index: 1000;
         text-align: center;
         position: fixed;
+    }
+
+    .tabla1 {
+        background-color: #022969;
+        border-radius: 3vh 3vh 0 0;
+        padding: 1vh;
+        padding-top: 0;
     }
 
     .alumnos {
@@ -303,16 +248,19 @@ if (isset($_POST['eliminar_alumno'])) {
     }
 
     .primerosbordes {
-        border-radius: 2vh 0 0 2vh;
+        border-radius: 3vh 0 0 3vh;
+        padding-left: 1vh;
     }
 
     .ultimosbordes {
-        border-radius: 0 2vh 2vh 0;
+        border-radius: 0 3vh 3vh 0;
+        padding-right: 1vh;
     }
 
     .sinfondo {
-        background-color: transparent;
+        background-color: #022969;
         width: 4vh;
+        padding: 1vh;
     }
 
     table {
@@ -330,7 +278,7 @@ if (isset($_POST['eliminar_alumno'])) {
 
     table tr:hover {
         border-radius: 3vh;
-        background-color: white;
+        background-color: black;
         cursor: pointer;
     }
 
@@ -339,7 +287,7 @@ if (isset($_POST['eliminar_alumno'])) {
         padding: 1.2vh 0;
     }
 
-    
+
     td .sihover:hover {
         background-color: white;
         padding: 1.2vh 0;
@@ -357,6 +305,11 @@ if (isset($_POST['eliminar_alumno'])) {
         background-color: rgba(0, 0, 0, 0.5);
         padding: 1.2vh 0;
     }
+
+    .separaciones {
+    width: 100%;
+    border-spacing: 0 3px;
+}
 
     .flechas {
         height: 1.6vh;
@@ -400,7 +353,7 @@ if (isset($_POST['eliminar_alumno'])) {
     .altaboton {
         padding: 9px 25px;
         color: white;
-        background: linear-gradient(to right, #0085d0, #001936);
+        background: linear-gradient(to right, #022969, #011535);
         border: none;
         width: 12vh;
         border-radius: 50px;
@@ -429,8 +382,7 @@ if (isset($_POST['eliminar_alumno'])) {
     }
 
     body::-webkit-scrollbar-thumb {
-        border-radius: 4vh;
-        border: 2px solid white;
+        background-color: #022969;
     }
 
     /* ------------ */
@@ -489,110 +441,6 @@ if (isset($_POST['eliminar_alumno'])) {
         text-align: center;
     }
 
-    /* POPUP ELIMINAR ALUMNO */
-
-    .popupeliminar {
-        color: white;
-        margin: 25vh auto;
-        padding: 20px;
-        background-color: rgba(0, 0, 0, 0.9);
-        box-shadow: 0 0 20px rgba(0, 0, 0, 1);
-        border-radius: 5px;
-        width: fit-content;
-        height: fit-content;
-        position: relative;
-        transition: all 1s ease-in-out;
-        border-radius: 4vh;
-    }
-
-    .popupeliminar .close {
-        position: absolute;
-        top: 2.4vh;
-        right: 3vh;
-        transition: all 200ms;
-        font-size: 30px;
-        font-weight: bold;
-        text-decoration: none;
-    }
-
-    .popupeliminar .close:hover {
-        color: #dc3545;
-    }
-
-    .popupeliminar .back {
-        position: absolute;
-        top: 2.4vh;
-        right: 35vh;
-        transition: all 200ms;
-        font-size: 30px;
-        font-weight: bold;
-        text-decoration: none;
-    }
-
-    .popupeliminar .back:hover {
-        color: #2193f3;
-    }
-
-    .popupeliminar p {
-        margin-bottom: 1vh;
-    }
-
-    .overlayeliminar {
-        margin: 4vh;
-        margin-top: 30vh;
-        position: fixed;
-        top: -20vh;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        transition: opacity 500ms;
-        visibility: hidden;
-        opacity: 0;
-    }
-
-    .overlayeliminar:target {
-        visibility: visible;
-        opacity: 1;
-    }
-
-    #cancelarboton {
-        background: linear-gradient(to right, #043689, #137391);
-        width: 20vh;
-        height: 5vh;
-        border-radius: 4vh;
-        font-size: 1.8vh;
-        border: none;
-        transition: all 0.3s;
-    }
-
-    #cancelarboton:hover {
-        font-weight: 500;
-        font-size: 2vh;
-        background: white;
-        color: #0b548d;
-    }
-
-    #eliminarboton {
-        background: linear-gradient(to right, #dc3545, #b41d6e);
-        width: 20vh;
-        height: 5vh;
-        border-radius: 4vh;
-        font-size: 1.8vh;
-        border: none;
-        transition: all 0.3s;
-    }
-
-    #eliminarboton:hover {
-        font-weight: 500;
-        font-size: 2vh;
-        background: white;
-        color: #dc3545;
-    }
-
-    .popupeliminar button {
-        margin: 1vh;
-    }
-
     .logoutimg {
         height: 4vh;
         margin: 0.6vh;
@@ -606,29 +454,29 @@ if (isset($_POST['eliminar_alumno'])) {
     }
 
     /* .boton {
-    display: block;
-    width: 100%;
-    padding: 10px;
-    font-size: 2vh;
-    border: none;
-    background: linear-gradient(to right, #0085d0, #001936);
-    color: white;
-    border-radius: 4vh;
-    cursor: pointer;
-    transition: 0.5s;
-}
+        display: block;
+        width: 100%;
+        padding: 10px;
+        font-size: 2vh;
+        border: none;
+        background: linear-gradient(to right, #022969, #011535);
+        color: white;
+        border-radius: 4vh;
+        cursor: pointer;
+        transition: 0.5s;
+    }
 
-.boton:hover {
-    background: white;
-    color: #001936;
-    font-size: 2.2vh;
-    transition: 0.5s;
-} */
+    .boton:hover {
+        background: white;
+        color: #011535;
+        font-size: 2.2vh;
+        transition: 0.5s;
+    } */
 
 
     .logoutboton {
         color: white;
-        background: linear-gradient(to right, #0085d0, #001936);
+        background: linear-gradient(to right, #022969, #011535);
         border: none;
         border-radius: 4vh;
         cursor: pointer;
@@ -664,7 +512,7 @@ if (isset($_POST['eliminar_alumno'])) {
     .buscador button {
         margin-left: -5vh;
         color: white;
-        background: linear-gradient(to right, #b41d6e, #043689);
+        background: linear-gradient(to right, #022969, #011535);
         border: none;
         font-size: 1.8vh;
         font-weight: 500;
