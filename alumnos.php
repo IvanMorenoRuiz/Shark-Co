@@ -15,6 +15,11 @@ else{
 
 include_once("./ini/conexion.php");
 
+$order = "num_matricula";
+if (isset($_GET["order"])) {
+    $order = $_GET["order"];
+}
+
 $query1 = "SELECT * from tbl_alumno";
 $result1 = $conn->query($query1);
 // Verificar si se ha enviado una consulta de búsqueda
@@ -60,7 +65,7 @@ if (isset($_POST['eliminar_tbl_alumno'])) {
     <div id="oscuro">
         <header>
             <div class="flex headerparte1">
-                <a href="./salir.php"><button class="logoutboton"><img class="logoutimg" src="./src/LOGOUT.png" alt=""></button></a>
+                <a href="./ini/salir.php"><button class="logoutboton"><img class="logoutimg" src="./src/LOGOUT.png" alt=""></button></a>
                 <a href="./tbl_alumnos.php"><img class="nav-logo" src="./src/LOGO/LOGO NOMBRE SHARKANDCO.png" alt=""></a>
             </div>
             <!-- <nav class="nav">
