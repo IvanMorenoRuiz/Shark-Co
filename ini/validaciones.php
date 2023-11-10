@@ -8,7 +8,15 @@ if(!filter_has_var(INPUT_POST,'inicio')) {
     $email = $_POST["email"];
     $password = $_POST["password"];
 // Validación del dominio del correo electrónico
-if (strpos($email, "@fje.edu") === false) {
+if (empty($email) || empty($password)) {
+    header("Location: ../index.php?emptyUsr");
+    exit;
+} else if (empty($password)){
+    header("Location: ../index.php?emptyPwd");
+    exit;
+} else if (empty($email)){
+    header("Location: ../index.php?empty");
+}else if (strpos($email, "@fje.edu") === false) {
     // Utiliza la función strpos para buscar la cadena "@fje.edu" en el correo electrónico ($email).
     // Si no se encuentra la cadena, strpos devolverá `false`.
     header("Location: ../index.php?correo");
@@ -18,7 +26,9 @@ if (strpos($email, "@fje.edu") === false) {
 }
 
     // Incluye el archivo que contiene la conexión a la base de datos.
-    include_once("conexion.php");
+    include_once("./conexion.php");
+
+   
 
     // Resto del código para validar el inicio de sesión...
 
@@ -39,26 +49,19 @@ if (strpos($email, "@fje.edu") === false) {
         mysqli_stmt_bind_result($stmt, $dni_prof, $hashedPassword, $nombre_prof);
         // Se obtienen los valores de las columnas en las variables correspondientes.
         mysqli_stmt_fetch($stmt);
-
-        // Se verifica si la contraseña proporcionada ($password) coincide con la contraseña almacenada en la base de datos ($hashedPassword).
+               // Se verifica si la contraseña proporcionada ($password) coincide con la contraseña almacenada en la base de datos ($hashedPassword).
         if (password_verify($password, $hashedPassword)) { 
             // Inicio de sesión exitoso
-
+            session_start();
             // Se almacena el ID de usuario en la sesión.
             $_SESSION["dni_prof"] = $dni_prof;
-            // Se muestra un mensaje de inicio de sesión exitoso junto con el nombre del usuario.
-            echo "Inicio de sesión exitoso. Bienvenido, $nombre_prof. </br> Aquí se mostraría el contenido.";
             // Redirige al usuario a una página de contenido (la línea comentada no está activa).
-            // echo "(Location : './paginaamostrar.html')";
+            header("Location: ../alumnos.php");
         } else {
-            // Si la contraseña no coincide, se redirige de vuelta a la página de inicio de sesión con un mensaje de error.
-            header("Location: ../index.php?error");
-        }
-    } else {
         // Si el correo electrónico no existe en la base de datos, se redirige de vuelta a la página de inicio de sesión con un mensaje de error.
         header("Location: ../index.php?error");
+        }
     }
-
     // Se cierra el statement de MySQL.
     mysqli_stmt_close($stmt);
     // Se cierra la conexión a la base de datos.
