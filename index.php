@@ -36,6 +36,10 @@
                             </div>
                             <?php if (isset($_GET['error'])) {echo " <br> <br> <p style='text-align: center;'>Usuario o contraseña incorrecto.</p>"; } ?>
                             <?php if (isset($_GET['correo'])) {echo " <br> <br> <p style='text-align: center;'>El correo debe ser <strong>@fje.edu</strong></p>"; } ?>
+                            <?php if (isset($_GET['emptyUsr'])) {echo " <br> <br> <p style='text-align: center;'>No has rellenado el usuario. </p>"; } ?>
+                            <?php if (isset($_GET['emptyPwd'])) {echo " <br> <br> <p style='text-align: center;'>No has rellenado la contraseña</p>"; } ?>
+                            <?php if (isset($_GET['empty'])) {echo " <br> <br> <p style='text-align: center;'>El usuario y la contraseña son obligatorios.</p>"; } ?>
+
 
                            
                             <!-- <div>
