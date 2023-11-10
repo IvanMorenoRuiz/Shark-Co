@@ -38,6 +38,8 @@
                     <label for="apellido_alu">Apellidos:</label>
                     <input type="text" name="apellido_alu" id="apellido_alu" class="form-control inputforms" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
                 </div>
+                <?php if (isset($_GET['errorDigitos'])) {echo " <br> <br> <p style='text-align: center;'>Usuario o contraseña incorrecto.</p>"; } ?>
+
                 <button type="submit" class="boton" onclick="return altaAlum()">Confirmar</button>
             </form>
         </div>
@@ -52,31 +54,44 @@ function altaAlum() {
 
     // Expresiones regulares para validar formatos
     var numMatriculaRegExp = /^\d{9}$/;
-    var dniRegExp = /^[0-9]{8}[A-Z]$/;
+    var dniRegExp = /^\d{8}[A-Z]$/;
     var nombreApellidoRegExp = /^[A-Za-zÁáÉéÍíÓóÚúÑñÜü\s]+$/;
 
     // Validación para num_matricula
     if (!numMatriculaRegExp.test(num_matricula)) {
-        alert("El número de matrícula debe contener 9 dígitos.");
+        alert("El número de matrícula debe contener exactamente 9 dígitos.");
+                header('Location: ./formAltaAlumnos.php?errorDigitos')
+
         return false;
     }
 
     // Validación para dni_alu
     if (!dniRegExp.test(dni_alu)) {
-        alert("El DNI debe tener 8 dígitos seguidos de una letra.");
+        alert("El DNI debe tener 8 dígitos seguidos de una letra mayúscula.");
+        return false;
+    }
+
+    // Verificación de la letra del DNI
+    var dniNumero = parseInt(dni_alu.substring(0, 8), 10);
+    var letras = 'TRWAGMYFPDXBNJZSQVHLCKE';
+    var letraCalculada = letras.charAt(dniNumero % 23);
+
+    if (letraCalculada !== dni_alu.charAt(8)) {
+        alert("La letra del DNI no es válida para el número proporcionado.");
         return false;
     }
 
     // Validación para nombre_alu y apellido_alu
     if (!nombreApellidoRegExp.test(nombre_alu) || !nombreApellidoRegExp.test(apellido_alu)) {
-        alert("El nombre y apellido no deben contener números ni signos.");
+        alert("El nombre y apellido no deben contener números ni signos, y pueden incluir espacios.");
         return false;
     }
 
     return true; // Envía el formulario si todas las validaciones pasan
 }
+</script>
 
-    </script>
+
 </body>
 <style>
     * {
