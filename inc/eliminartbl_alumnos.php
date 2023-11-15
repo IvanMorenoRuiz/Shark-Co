@@ -1,10 +1,12 @@
 <?php
 if (!isset($_GET['num_matricula']) || empty($_GET['num_matricula'])) {
-    header('Location: ../alumnos.php');
+    header('Location: ./alumnos.php');
     exit;
 }
 
-include_once "./inc/conexion.php";
+try{
+    
+include_once "./conexion.php";
 
 // Obtener el ID del alumno a eliminar
 $num_matricula = $_GET['num_matricula'];
@@ -24,6 +26,8 @@ if ($query->execute()) {
 
 $query->close();
 $conn->close();
-?>
+}catch(Exception $e){
+    echo "Error : ". $e->getMessage();
+}
 
-<script src="../js/eliminar.js"></script>
+?>

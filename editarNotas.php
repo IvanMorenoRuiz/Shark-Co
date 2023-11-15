@@ -1,117 +1,54 @@
 <!DOCTYPE html>
-<html lang="es">
+<html>
 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sharks&Co</title>
+    <title>New Vision</title>
     <link rel="shortcut icon" href="./src/LOGO/logo.png" type="image/x-icon">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com%22%3E/
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500&display=swap" rel="stylesheet">
-    <style>
-        .error-message {
-            color: red;
-            font-size: 14px;
-            margin-top: 5px;
-        }
-    </style>
 </head>
 
 <body>
     <header class="flex">
         <div class="nav">
-            <a href="./alumnos.php">
             <img src="./src/LOGO/logoletrasgrandes.png" alt="">
-            </a>
         </div>
     </header>
     <div class="flex" id="oscuro">
         <div class="container">
-            <h2 id="titulo">Formulario Alta Alumno</h2>
+            <h2 id="titulo">Editor de Notas</h2>
+            <form action="altaalumnos.php" method="POST">
+                <div class="inputs">
+                    <label for="asignatura">Asignatura:</label>
+                    <select name="asignatura" id="asignatura" class="form-control asignatura" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                    <?php
+                    include_once('./inc/conexion.php');
+                    // Consulta para obtener la lista de asignaturas
+                    $query = "SELECT id_assignatura, nombre_assignatura FROM tbl_assignatura";
+                    $result = $conn->query($query);
 
-            <?php
-            // Inicializar las variables para almacenar los valores y errores
-            $num_matricula = $dni_alu = $nombre_alu = $apellido_alu = '';
-            $num_matricula_error = $dni_alu_error = $nombre_alu_error = $apellido_alu_error = '';
-            $form_valid = true;
-
-            // Si se envió el formulario
-            if ($_SERVER["REQUEST_METHOD"] == "POST") {
-
-                // Validación para dni_alu
-                $dni_alu = $_POST["dni_alu"];
-                if (empty($dni_alu) || !preg_match("/^\d{8}[A-Z]$/", $dni_alu)) {
-                    $dni_alu_error = 'Número de DNI incorrecto.';
-                    $form_valid = false;
-                } else {
-                    // Verificación de la letra del DNI
-                    $dniNumero = (int) substr($dni_alu, 0, 8);
-                    $letras = 'TRWAGMYFPDXBNJZSQVHLCKE';
-                    $letraCalculada = $letras[$dniNumero % 23];
-                    if ($letraCalculada !== $dni_alu[8]) {
-                        $dni_alu_error = 'La letra no es la correcta.';
-                        $form_valid = false;
+                    // Mostrar las opciones en el elemento select
+                    while ($row = $result->fetch_assoc()) {
+                        echo "<option value='" . $row['id_assignatura'] . "'>" . $row['nombre_assignatura'] . "</option>";
                     }
-                }
 
-                // Validación para nombre_alu
-                $nombre_alu = $_POST["nombre_alu"];
-                if (empty($nombre_alu) || !preg_match("/^[A-Za-zÁáÉéÍíÓóÚúÑñÜü\s]+$/", $nombre_alu)) {
-                    $nombre_alu_error = 'Introduce el nombre.';
-                    $form_valid = false;
-                }
-
-                // Validación para apellido_alu
-                $apellido_alu = $_POST["apellido_alu"];
-                if (empty($apellido_alu) || !preg_match("/^[A-Za-zÁáÉéÍíÓóÚúÑñÜü\s]+$/", $apellido_alu)) {
-                    $apellido_alu_error = 'Introduce el apellido.';
-                    $form_valid = false;
-                }
-            }
-
-            // Si todos los campos son válidos, redirige a altaalumnos.php
-            if ($form_valid && $_SERVER["REQUEST_METHOD"] == "POST") {
-                header("Location: ./inc/altaalumnos.php");
-                exit();
-            }
-            ?>
-
-            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
-
-                <div class="inputs">
-                    <label for="dni_alu">DNI:</label>
-                    <input type="text" name="dni_alu" id="dni_alu" class="form-control nombre_alu" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value="<?php echo htmlspecialchars($dni_alu); ?>">
-                    <?php if ($dni_alu_error) : ?>
-                        <p class="error-message"><?php echo $dni_alu_error; ?></p>
-                    <?php endif; ?>
+                    ?>
+                </select>
                 </div>
-
                 <div class="inputs">
-                    <label for="nombre_alu">Nombre:</label>
-                    <input type="text" name="nombre_alu" id="nombre_alu" class="form-control inputforms" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value="<?php echo htmlspecialchars($nombre_alu); ?>">
-                    <?php if ($nombre_alu_error) : ?>
-                        <p class="error-message"><?php echo $nombre_alu_error; ?></p>
-                    <?php endif; ?>
+                    <label for="nota">Nota Número:</label>
+                    <input type="number" name="nota" value="<?php echo $_GET['nota_alumno'] ?>" id="nota" class="form-control nota" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" min="0" max="10">
                 </div>
-
-                <div class="inputs">
-                    <label for="apellido_alu">Apellidos:</label>
-                    <input type="text" name="apellido_alu" id="apellido_alu" class="form-control inputforms" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value="<?php echo htmlspecialchars($apellido_alu); ?>">
-                    <?php if ($apellido_alu_error) : ?>
-                        <p class="error-message"><?php echo $apellido_alu_error; ?></p>
-                    <?php endif; ?>
-                </div>
-
-                <button type="submit" class="boton">Confirmar</button>
+                <button type="submit" class="boton" src="../inc/altanotas.php">Confirmar</button>
             </form>
         </div>
     </div>
+    
 </body>
-
-</html>
-
 
 <style>
     * {

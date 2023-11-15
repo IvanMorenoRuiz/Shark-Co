@@ -12,22 +12,40 @@ if (!isset($_SESSION['dni_prof'])) {
 
 include "./inc/conexion.php"; // Incluye tu archivo de conexión
 
+
+
 $order = "num_matricula";
 if (isset($_GET["order"])) {
     $order = $_GET["order"];
 }
+try {
+    $num_matricula = $_GET['num_matricula'];
+    $nombre = $_GET['nombre_alu'];
+    
+    $query1 = "SELECT tbl_alumno_nota_assignatura.*, tbl_assignatura.nombre_assignatura 
+               FROM tbl_alumno_nota_assignatura 
+               JOIN tbl_assignatura ON tbl_alumno_nota_assignatura.id_assignatura = tbl_assignatura.id_assignatura
+               WHERE num_matricula = ?";
+    
+    $stmt = mysqli_stmt_init($conn);
+    $stmt = mysqli_prepare($conn, $query1);
+    mysqli_stmt_bind_param($stmt, "s", $num_matricula);
+    mysqli_stmt_execute($stmt);
+    
+    $result1 = mysqli_stmt_get_result($stmt);
+    
+    mysqli_stmt_close($stmt);
+    mysqli_close($conn);
+} catch(Exception $e) {
+    echo 'Excepción capturada: ',  $e->getMessage();
+}
 
-$query1 = "SELECT * FROM tbl_alumno_nota_assignatura";
-$result1 = mysqli_query($conn, $query1); // Utiliza $conn para realizar la consulta
 
-// Verificar si se ha enviado una consulta de búsqueda
 if (isset($_POST['buscar'])) {
-    // Obtener el nombre ingresado en el formulario de búsqueda
     $nombre = $_POST['nombre'];
 
-    // Realizar la consulta a la base de datos para buscar coincidencias de nombres
     $query = "SELECT * FROM tbl_alumno WHERE nombre_alu LIKE '%$nombre%' ORDER BY $order";
-    $result1 = mysqli_query($conn, $query); // Utiliza $conn para realizar la consulta
+    $result1 = mysqli_query($conn, $query); 
 }
 
 ?>
@@ -63,7 +81,8 @@ if (isset($_POST['buscar'])) {
             <!-- TABLA ALUMNOS -->
             <div id="tablaAlumnos">
                 <div>
-                    <h3 id="titulo">Notas - <?php echo $nombre_alumno; ?> -</h3>
+                <h3 id="titulo">Notas de  <?php echo $nombre; ?> </h3>
+
                 </div>
                 <table class="tabla1 separaciones">
 
@@ -77,12 +96,13 @@ if (isset($_POST['buscar'])) {
 
                     <tbody>
                         <?php
+                        $nombre = ""; 
                         if ($result1) {
                             while ($row = mysqli_fetch_assoc($result1)) { // Utiliza mysqli_fetch_assoc
                                 echo "<tr>";
-                                echo "<td class='primerosbordes'>" . $row["id_assignatura"] . "</td>";
+                                echo "<td class='primerosbordes'>" . $row["nombre_assignatura"] . "</td>";
                                 echo "<td class='ultimosbordes'>" . $row["nota_alumno"] . "</td>";
-                                echo "<td class='sinfondo nohover'><button id='editar' class='editar'>Editar</button></a></td>";
+                                echo "<td class='sinfondo nohover'><a href='editarNotas.php?nombre_assignatura=" . $row["nombre_assignatura"] . "&nota_alumno=" . $row["nota_alumno"] . "'><button id='notas'>Editar</button></a></td>";
                                 echo "</tr>";
                             }
                         }

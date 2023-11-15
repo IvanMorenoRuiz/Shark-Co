@@ -1,11 +1,11 @@
 <?php
 session_start();
 if (!isset($_SESSION['dni_prof'])) {
-    header("location: ./index.php");
+    header("location: ./index.html");
     exit;
 } else if (isset($_GET['logout'])) {
     session_destroy();
-    header("location: ./index.php");
+    header("location: ./index.html");
     exit;
 }
 
@@ -79,7 +79,7 @@ if (isset($_POST['eliminar_tbl_alumno'])) {
                 </ul>
             </nav> -->
             <div class="alta flex">
-                <a href="#popupalta"><button class="altaboton button flex">Alta</button></a>
+                <a href="./formAltaAlumnos.php"><button class="altaboton button flex">Alta</button></a>
                 <form class="buscador flex" method="POST" action="">
                     <input type="text" name="nombre" placeholder="Buscar por nombre">
                     <button type="submit" name="buscar">Buscar</button>
@@ -96,7 +96,6 @@ if (isset($_POST['eliminar_tbl_alumno'])) {
 
                     <thead>
                         <tr class="noresaltar">
-                            <th class="titulos">Id</th>
                             <th class="titulos">Matricula</th>
                             <th class="titulos">DNI</th>
                             <th class="titulos">Nombre</th>
@@ -112,13 +111,12 @@ if (isset($_POST['eliminar_tbl_alumno'])) {
                             while ($row = $result1->fetch_assoc()) {
                                 echo "<tr>";
                                 echo "<td class='primerosbordes'>" . $row["num_matricula"] . "</td>";
-                                echo "<td>" . $row["dni_alu"] . "</td>";
                                 echo "<td>" . $row["dni_alu"] . "   </td>";
                                 echo "<td>" . $row["nombre_alu"] . "</td>";
                                 echo "<td class='ultimosbordes'>" . $row["apellido_alu"] . "</td>";
-                                echo "<td class='sinfondo nohover'><a href='formEditartbl_alumnos.php?num_matricula=" . $row["num_matricula"] . "'><button id='editar' class='editar'>Editar</button></a></td>";
-                                echo "<td class='sinfondo nohover'><a href='eliminartbl_alumnos.php?num_matricula=" . $row["num_matricula"] . "'><button id='eliminar'>Eliminar</button></a></td>";
-                                echo "<td class='sinfondo nohover'><a href='./notas.php'><button id='notas'>Notas</button></a></td>";
+                                echo "<td class='sinfondo nohover'><a href='formEditaralumnos.php?num_matricula=" . $row["num_matricula"] . "'><button id='editar' class='editar'>Editar</button></a></td>";
+                                echo "<td class='sinfondo nohover'><a href='./inc/eliminartbl_alumnos.php?num_matricula=" . $row["num_matricula"] . "'><button id='eliminar'>Eliminar</button></a></td>";
+                                echo "<td class='sinfondo nohover'><a href='notas.php?nombre_alu=" . $row["nombre_alu"] . "&num_matricula=" . $row["num_matricula"] . "'><button id='notas'>Notas</button></a></td>";
                                 echo "</tr>";
                             }
                         }

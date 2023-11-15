@@ -2,24 +2,24 @@
 session_start();
 
 if(!filter_has_var(INPUT_POST,'inicio')) {
-    header('Location : '. '../index.php');
+    header('Location : '. '../login.php');
     exit();
     } else {// comprobamos que la solicitud se envie con POST
     $email = $_POST["email"];
     $password = $_POST["password"];
 // Validación del dominio del correo electrónico
 if (empty($email) || empty($password)) {
-    header("Location: ../index.php?emptyUsr");
+    header("Location: ../login.php?emptyUsr");
     exit;
 } else if (empty($password)){
-    header("Location: ../index.php?emptyPwd");
+    header("Location: ../login.php?emptyPwd");
     exit;
 } else if (empty($email)){
-    header("Location: ../index.php?empty");
+    header("Location: ../login.php?empty");
 }else if (strpos($email, "@fje.edu") === false) {
     // Utiliza la función strpos para buscar la cadena "@fje.edu" en el correo electrónico ($email).
     // Si no se encuentra la cadena, strpos devolverá `false`.
-    header("Location: ../index.php?correo");
+    header("Location: ../login.php?correo");
 
     exit();
     // La función exit() termina inmediatamente la ejecución del script PHP, lo que significa que el código posterior a esta línea no se ejecutará.
