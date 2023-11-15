@@ -71,8 +71,9 @@
 
             // Si todos los campos son válidos, redirige a altaalumnos.php
             if ($form_valid && $_SERVER["REQUEST_METHOD"] == "POST") {
-                header("Location: ./inc/altaalumnos.php");
-                exit();
+                // Guardar los datos en la base de datos
+                include_once "./inc/altaalumnos.php"; // Incluye el código que inserta los datos en la base de datos
+                exit(); // Salir después de la redirección
             }
             ?>
 
