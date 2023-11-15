@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
@@ -10,6 +10,13 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        .error-message {
+            color: red;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+    </style>
 </head>
 
 <body>
@@ -21,78 +28,89 @@
     <div class="flex" id="oscuro">
         <div class="container">
             <h2 id="titulo">Formulario Alta Alumno</h2>
-            <form action="./inc/altaalumnos.php" method="POST">
-                <div class="inputs">
-                    <label for="num_matricula">Numero Matricula:</label>
-                    <input type="text" name="num_matricula" id="num_matricula" class="form-control dni_alu" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
-                </div>
+
+            <?php
+            // Inicializar las variables para almacenar los valores y errores
+            $num_matricula = $dni_alu = $nombre_alu = $apellido_alu = '';
+            $num_matricula_error = $dni_alu_error = $nombre_alu_error = $apellido_alu_error = '';
+            $form_valid = true;
+
+            // Si se envió el formulario
+            if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+                // Validación para dni_alu
+                $dni_alu = $_POST["dni_alu"];
+                if (empty($dni_alu) || !preg_match("/^\d{8}[A-Z]$/", $dni_alu)) {
+                    $dni_alu_error = 'Número de DNI incorrecto.';
+                    $form_valid = false;
+                } else {
+                    // Verificación de la letra del DNI
+                    $dniNumero = (int) substr($dni_alu, 0, 8);
+                    $letras = 'TRWAGMYFPDXBNJZSQVHLCKE';
+                    $letraCalculada = $letras[$dniNumero % 23];
+                    if ($letraCalculada !== $dni_alu[8]) {
+                        $dni_alu_error = 'La letra no es la correcta.';
+                        $form_valid = false;
+                    }
+                }
+
+                // Validación para nombre_alu
+                $nombre_alu = $_POST["nombre_alu"];
+                if (empty($nombre_alu) || !preg_match("/^[A-Za-zÁáÉéÍíÓóÚúÑñÜü\s]+$/", $nombre_alu)) {
+                    $nombre_alu_error = 'Introduce el nombre.';
+                    $form_valid = false;
+                }
+
+                // Validación para apellido_alu
+                $apellido_alu = $_POST["apellido_alu"];
+                if (empty($apellido_alu) || !preg_match("/^[A-Za-zÁáÉéÍíÓóÚúÑñÜü\s]+$/", $apellido_alu)) {
+                    $apellido_alu_error = 'Introduce el apellido.';
+                    $form_valid = false;
+                }
+            }
+
+            // Si todos los campos son válidos, redirige a altaalumnos.php
+            if ($form_valid && $_SERVER["REQUEST_METHOD"] == "POST") {
+                header("Location: ./inc/altaalumnos.php");
+                exit();
+            }
+            ?>
+
+            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
+
                 <div class="inputs">
                     <label for="dni_alu">DNI:</label>
-                    <input type="text" name="dni_alu" id="dni_alu" class="form-control nombre_alu" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                    <input type="text" name="dni_alu" id="dni_alu" class="form-control nombre_alu" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value="<?php echo htmlspecialchars($dni_alu); ?>">
+                    <?php if ($dni_alu_error) : ?>
+                        <p class="error-message"><?php echo $dni_alu_error; ?></p>
+                    <?php endif; ?>
                 </div>
+
                 <div class="inputs">
                     <label for="nombre_alu">Nombre:</label>
-                    <input type="text" name="nombre_alu" id="nombre_alu" class="form-control inputforms" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                    <input type="text" name="nombre_alu" id="nombre_alu" class="form-control inputforms" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value="<?php echo htmlspecialchars($nombre_alu); ?>">
+                    <?php if ($nombre_alu_error) : ?>
+                        <p class="error-message"><?php echo $nombre_alu_error; ?></p>
+                    <?php endif; ?>
                 </div>
+
                 <div class="inputs">
                     <label for="apellido_alu">Apellidos:</label>
-                    <input type="text" name="apellido_alu" id="apellido_alu" class="form-control inputforms" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                    <input type="text" name="apellido_alu" id="apellido_alu" class="form-control inputforms" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value="<?php echo htmlspecialchars($apellido_alu); ?>">
+                    <?php if ($apellido_alu_error) : ?>
+                        <p class="error-message"><?php echo $apellido_alu_error; ?></p>
+                    <?php endif; ?>
                 </div>
-                <?php if (isset($_GET['errorDigitos'])) {echo " <br> <br> <p style='text-align: center;'>Usuario o contraseña incorrecto.</p>"; } ?>
 
-                <button type="submit" class="boton" onclick="return altaAlum()">Confirmar</button>
+                <button type="submit" class="boton">Confirmar</button>
             </form>
         </div>
     </div>
-    <script>
-function altaAlum() {
-    // Obtén los valores de los campos
-    var num_matricula = document.getElementById("num_matricula").value;
-    var dni_alu = document.getElementById("dni_alu").value;
-    var nombre_alu = document.getElementById("nombre_alu").value;
-    var apellido_alu = document.getElementById("apellido_alu").value;
-
-    // Expresiones regulares para validar formatos
-    var numMatriculaRegExp = /^\d{9}$/;
-    var dniRegExp = /^\d{8}[A-Z]$/;
-    var nombreApellidoRegExp = /^[A-Za-zÁáÉéÍíÓóÚúÑñÜü\s]+$/;
-
-    // Validación para num_matricula
-    if (!numMatriculaRegExp.test(num_matricula)) {
-        alert("El número de matrícula debe contener exactamente 9 dígitos.");
-                header('Location: ./formAltaAlumnos.php?errorDigitos')
-
-        return false;
-    }
-
-    // Validación para dni_alu
-    if (!dniRegExp.test(dni_alu)) {
-        alert("El DNI debe tener 8 dígitos seguidos de una letra mayúscula.");
-        return false;
-    }
-
-    // Verificación de la letra del DNI
-    var dniNumero = parseInt(dni_alu.substring(0, 8), 10);
-    var letras = 'TRWAGMYFPDXBNJZSQVHLCKE';
-    var letraCalculada = letras.charAt(dniNumero % 23);
-
-    if (letraCalculada !== dni_alu.charAt(8)) {
-        alert("La letra del DNI no es válida para el número proporcionado.");
-        return false;
-    }
-
-    // Validación para nombre_alu y apellido_alu
-    if (!nombreApellidoRegExp.test(nombre_alu) || !nombreApellidoRegExp.test(apellido_alu)) {
-        alert("El nombre y apellido no deben contener números ni signos, y pueden incluir espacios.");
-        return false;
-    }
-
-    return true; // Envía el formulario si todas las validaciones pasan
-}
-</script>
-
-
 </body>
+
+</html>
+
+
 <style>
     * {
         margin: 0;
