@@ -20,7 +20,10 @@ if (isset($_GET["order"])) {
 }
 
 $nombre = $_GET['nombre_alu'];
-$query1 = "SELECT * FROM tbl_alumno_nota_assignatura";
+$query1 = "SELECT tbl_alumno_nota_assignatura.*, tbl_assignatura.nombre_assignatura 
+           FROM tbl_alumno_nota_assignatura 
+           JOIN tbl_assignatura ON tbl_alumno_nota_assignatura.id_assignatura = tbl_assignatura.id_assignatura";
+
 $result1 = mysqli_query($conn, $query1); // Utiliza $conn para realizar la consulta
 
 // Verificar si se ha enviado una consulta de búsqueda
@@ -85,7 +88,7 @@ if (isset($_POST['buscar'])) {
                         if ($result1) {
                             while ($row = mysqli_fetch_assoc($result1)) { // Utiliza mysqli_fetch_assoc
                                 echo "<tr>";
-                                echo "<td class='primerosbordes'>" . $row["id_assignatura"] . "</td>";
+                                echo "<td class='primerosbordes'>" . $row["nombre_assignatura"] . "</td>";
                                 echo "<td class='ultimosbordes'>" . $row["nota_alumno"] . "</td>";
                                 echo "<td class='sinfondo nohover'><button id='editar' class='editar'>Editar</button></a></td>";
                                 echo "</tr>";
