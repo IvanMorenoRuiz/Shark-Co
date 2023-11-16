@@ -1,6 +1,7 @@
 <?php
 include_once("./inc/conexion.php");
- ?>
+?>
+
 <!DOCTYPE html>
 <html>
 
@@ -24,33 +25,34 @@ include_once("./inc/conexion.php");
     <div class="flex" id="oscuro">
         <div class="container">
             <h2 id="titulo">Formulario Añadir Notas</h2>
-            <form action="altaalumnos.php" method="POST">
-            <div class="inputs">
-                <label for="asignatura">Asignatura:</label>
-                <select name="asignatura" id="asignatura" class="form-control asignatura" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
-                    <?php
-                    // Consulta para obtener la lista de asignaturas
-                    $query = "SELECT id_assignatura, nombre_assignatura FROM tbl_assignatura";
-                    $result = $conn->query($query);
+            <form action="./inc/altanota.php?num_matricula=<?php echo $num_matricula; ?>" method="POST">
+                <div class="inputs">
+                    <label for="asignatura">Asignatura:</label>
+                    <select name="asignatura" id="asignatura" class="form-control asignatura" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                        <?php
+                        // Consulta para obtener la lista de asignaturas
+                        $query = "SELECT id_assignatura, nombre_assignatura FROM tbl_assignatura";
+                        $result = $conn->query($query);
 
-                    // Mostrar las opciones en el elemento select
-                    while ($row = $result->fetch_assoc()) {
-                        echo "<option value='" . $row['id_assignatura'] . "'>" . $row['nombre_assignatura'] . "</option>";
-                    }
-
-                    ?>
-                </select>
-            </div>
+                        // Mostrar las opciones en el elemento select
+                        while ($row = $result->fetch_assoc()) {
+                            echo "<option value='" . $row['id_assignatura'] . "'>" . $row['nombre_assignatura'] . "</option>";
+                        }
+                        ?>
+                    </select>
+                </div>
 
                 <div class="inputs">
                     <label for="nota">Nota Número:</label>
                     <input type="number" name="nota" id="nota" class="form-control nota" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" min="0" max="10">
                 </div>
-                <button type="submit" class="boton" src="../inc/altanotas.php">Confirmar</button>
+                <button type="submit" class="boton">Confirmar</button>
             </form>
         </div>
     </div>
 </body>
+</html>
+
 
 <style>
     * {
