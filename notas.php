@@ -2,11 +2,11 @@
 
 session_start();
 if (!isset($_SESSION['dni_prof'])) {
-    header("location: ./index.php");
+    header("location: ./index.html");
     exit;
 } else if (isset($_GET['logout'])) {
     session_destroy();
-    header("location: ./index.php");
+    header("location: ./index.html");
     exit;
 }
 
@@ -18,22 +18,34 @@ $order = "num_matricula";
 if (isset($_GET["order"])) {
     $order = $_GET["order"];
 }
+try {
+    $num_matricula = $_GET['num_matricula'];
+    $nombre = $_GET['nombre_alu'];
+    
+    $query1 = "SELECT tbl_alumno_nota_assignatura.*, tbl_assignatura.nombre_assignatura 
+               FROM tbl_alumno_nota_assignatura 
+               JOIN tbl_assignatura ON tbl_alumno_nota_assignatura.id_assignatura = tbl_assignatura.id_assignatura
+               WHERE num_matricula = ?";
+    
+    $stmt = mysqli_stmt_init($conn);
+    $stmt = mysqli_prepare($conn, $query1);
+    mysqli_stmt_bind_param($stmt, "s", $num_matricula);
+    mysqli_stmt_execute($stmt);
+    
+    $result1 = mysqli_stmt_get_result($stmt);
+    
+    mysqli_stmt_close($stmt);
+    mysqli_close($conn);
+} catch(Exception $e) {
+    echo 'Excepción capturada: ',  $e->getMessage();
+}
 
-$nombre = $_GET['nombre_alu'];
-$query1 = "SELECT tbl_alumno_nota_assignatura.*, tbl_assignatura.nombre_assignatura 
-           FROM tbl_alumno_nota_assignatura 
-           JOIN tbl_assignatura ON tbl_alumno_nota_assignatura.id_assignatura = tbl_assignatura.id_assignatura";
 
-$result1 = mysqli_query($conn, $query1); // Utiliza $conn para realizar la consulta
-
-// Verificar si se ha enviado una consulta de búsqueda
 if (isset($_POST['buscar'])) {
-    // Obtener el nombre ingresado en el formulario de búsqueda
     $nombre = $_POST['nombre'];
 
-    // Realizar la consulta a la base de datos para buscar coincidencias de nombres
     $query = "SELECT * FROM tbl_alumno WHERE nombre_alu LIKE '%$nombre%' ORDER BY $order";
-    $result1 = mysqli_query($conn, $query); // Utiliza $conn para realizar la consulta
+    $result1 = mysqli_query($conn, $query); 
 }
 
 ?>
@@ -58,7 +70,6 @@ if (isset($_POST['buscar'])) {
     <div id="oscuro">
         <header>
             <div class="flex headerparte1">
-                <a href="./inc/"><button class="logoutboton"><img class="logoutimg" src="./src/LOGOUT.png" alt=""></button></a>
                 <a href="./alumnos.php"><img class="nav-logo" src="./src/LOGO/LOGO NOMBRE SHARKANDCO.png" alt=""></a>
             </div>
             <div class="alta flex">
@@ -70,6 +81,10 @@ if (isset($_POST['buscar'])) {
             <div id="tablaAlumnos">
                 <div>
                 <h3 id="titulo">Notas de  <?php echo $nombre; ?> </h3>
+                <td class='sinfondo nohover'>
+                    <a href='formAltaNotas.php?num_matricula=<?php echo $num_matricula; ?>' button id='formnotas'>Añadir</button></a>
+                </td>
+
 
                 </div>
                 <table class="tabla1 separaciones">
@@ -90,7 +105,7 @@ if (isset($_POST['buscar'])) {
                                 echo "<tr>";
                                 echo "<td class='primerosbordes'>" . $row["nombre_assignatura"] . "</td>";
                                 echo "<td class='ultimosbordes'>" . $row["nota_alumno"] . "</td>";
-                                echo "<td class='sinfondo nohover'><button id='editar' class='editar'>Editar</button></a></td>";
+                                echo "<td class='sinfondo nohover'><a href='editarNotas.php?nombre_assignatura=" . $row["nombre_assignatura"] . "&nota_alumno=" . $row["nota_alumno"] . "&idAlu=".$row['id_alumno_nota_assignatura']."'><button id='notas'>Editar</button></a></td>";
                                 echo "</tr>";
                             }
                         }
