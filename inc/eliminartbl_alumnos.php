@@ -22,7 +22,11 @@ include_once "./conexion.php";
 $num_matricula = $_GET['num_matricula'];
 
 // Preparar la consulta SQL
-$query = $conn->prepare('DELETE FROM tbl_alumno WHERE num_matricula = ?');
+$query = $conn->prepare('DELETE alumno, asignatura
+FROM tbl_alumno alumno
+LEFT JOIN tbl_alumno_nota_assignatura asignatura ON alumno.num_matricula = asignatura.num_matricula
+WHERE alumno.num_matricula = ?;
+');
 $query->bind_param('i', $num_matricula);
 
 // Ejecutar la consulta

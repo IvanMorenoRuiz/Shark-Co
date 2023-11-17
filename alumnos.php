@@ -22,18 +22,19 @@ if (isset($_GET["order"])) {
 
 $query1 = "SELECT * from tbl_alumno";
 $result1 = $conn->query($query1);
-// Verificar si se ha enviado una consulta de búsqueda
+// query para busqueda formulario
 if (isset($_POST['buscar'])) {
-    // Obtener el nombre ingresado en el formulario de búsqueda
-    $nombre = $_POST['nombre'];
+    $termino_busqueda = $_POST['nombre'];
 
-    // Realizar la consulta a la base de datos para buscar coincidencias de nombres
-    $query = "SELECT * FROM tbl_alumno WHERE nombre_alu LIKE '%$nombre%' ORDER BY $order";
+    if (is_numeric($termino_busqueda)) {
+        $query = "SELECT * FROM tbl_alumno WHERE num_matricula = $termino_busqueda ORDER BY $order";
+    } else {
+        $query = "SELECT * FROM tbl_alumno WHERE nombre_alu LIKE '%$termino_busqueda%' ORDER BY $order";
+    }
+
     $result1 = $conn->query($query);
 }
-?>
 
-<?php
 if (isset($_POST['eliminar_tbl_alumno'])) {
     $numMatricula = $_POST['num_matricula'];
     $query = "DELETE FROM tbl_alumno WHERE num_matricula = '$numMatricula'";
@@ -81,7 +82,7 @@ if (isset($_POST['eliminar_tbl_alumno'])) {
             <div class="alta flex">
                 <a href="./formAltaAlumnos.php"><button class="altaboton button flex">Alta</button></a>
                 <form class="buscador flex" method="POST" action="">
-                    <input type="text" name="nombre" placeholder="Buscar por nombre">
+                    <input type="text" name="nombre" placeholder="Nombre/Matricula">
                     <button type="submit" name="buscar">Buscar</button>
                 </form>
             </div>
@@ -114,7 +115,7 @@ if (isset($_POST['eliminar_tbl_alumno'])) {
                                 echo "<td>" . $row["dni_alu"] . "   </td>";
                                 echo "<td>" . $row["nombre_alu"] . "</td>";
                                 echo "<td class='ultimosbordes'>" . $row["apellido_alu"] . "</td>";
-                                echo "<td class='sinfondo nohover'><a href='formEditaralumnos.php?num_matricula=" . $row["num_matricula"] . "'><button id='editar' class='editar'>Editar</button></a></td>";
+                                echo "<td class='sinfondo nohover'><a href='formEditaralumnos.php?num_matricula=" . $row["num_matricula"] . "&dniAlu=". $row["dni_alu"]."&nombre_alu=" . $row["nombre_alu"] ."&apellidoAlu=". $row["apellido_alu"] ."'><button id='editar' class='editar'>Editar</button></a></td>";
                                 echo "<td class='sinfondo nohover'><a href='./inc/eliminartbl_alumnos.php?num_matricula=" . $row["num_matricula"] . "'><button id='eliminar'>Eliminar</button></a></td>";
                                 echo "<td class='sinfondo nohover'><a href='notas.php?nombre_alu=" . $row["nombre_alu"] . "&num_matricula=" . $row["num_matricula"] . "'><button id='notas'>Notas</button></a></td>";
                                 echo "</tr>";

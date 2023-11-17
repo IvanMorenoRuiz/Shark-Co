@@ -2,7 +2,6 @@
     margin: 0;
     padding: 0;
     color: white;
-
     font-family: 'Rubik', sans-serif;
 }
 
@@ -27,7 +26,6 @@ body::before {
 
 header {
     background-image: linear-gradient(rgba(0, 0, 0, 1) 15%, rgba(0, 0, 0, 0.6) 50%, rgba(0, 0, 0, 0.1) 90%, transparent 100%);
-
     display: flex;
     align-items: center;
     justify-content: space-evenly;
@@ -151,12 +149,10 @@ td {
     padding: 1.2vh 0;
 }
 
-
 td .sihover:hover {
     background-color: white;
     padding: 1.2vh 0;
 }
-
 
 .titulos {
     padding-top: 1.5vh;
@@ -249,6 +245,7 @@ body::-webkit-scrollbar-thumb {
     background-color: #022969;
 }
 
+
 /* ------------ */
 
 .inputs {
@@ -317,6 +314,7 @@ form {
     filter: grayscale(100%) brightness(50%) sepia(100%) hue-rotate(-50deg) saturate(1000%) contrast(1);
 }
 
+
 /* .boton {
     display: block;
     width: 100%;
@@ -336,7 +334,6 @@ form {
     font-size: 2.2vh;
     transition: 0.5s;
 } */
-
 
 .logoutboton {
     color: white;
@@ -394,44 +391,36 @@ form {
     height: 5vh;
 }
 
-/* -------------- */
 
+/* -------------- */
 
 @media only screen and (max-width: 950px) {
     .column-3 {
         width: 50%;
     }
-
     header {
         height: 20vh;
         flex-direction: column;
         align-items: center;
     }
-
     .headerparte1 {
         width: 100%;
     }
-
     .box {
         width: 70%;
     }
-
     .popup {
         width: 70%;
     }
-
     #titulo {
         margin-top: 5vh;
     }
-
     .alumnos {
         padding-top: 16vh;
     }
-
     .buscador input {
         background-color: black;
     }
-
     table,
     thead,
     tbody,
@@ -440,26 +429,21 @@ form {
     tr {
         display: block;
     }
-
     thead tr {
         position: absolute;
         top: -9999px;
         left: -9999px;
     }
-
     table tr {
         margin: 3vh 0 5vh 0;
         margin-top: 1vh;
         padding-top: 1vh;
     }
-
-
     td {
         border: none;
         position: relative;
         padding-left: 50%;
     }
-
     td:before {
         position: absolute;
         top: 2;
@@ -468,61 +452,45 @@ form {
         padding-right: 10px;
         white-space: nowrap;
     }
-
     .tabla1 {
         margin-top: 10vh;
     }
-
     table tr:hover {
         background-color: transparent;
     }
-
     .primerosbordes {
         border-radius: 3vh 3vh 0 0;
         padding-left: 50%;
     }
-
     .ultimosbordes {
         border-radius: 0 0 3vh 3vh;
         padding-right: 1vh;
     }
-
     .sinfondo {
         width: 97%;
     }
-
     #eliminar {
         width: 100%;
     }
-
     #editar {
         width: 100%;
     }
-
     /*
     Label the data
 You could also use a data-* attribute and content for this. That way "bloats" the HTML, this way means you need to keep HTML and CSS in sync. Lea Verou has a clever way to handle with text-shadow.
     */
     td:nth-of-type(1):before {
-        content: "Id";
+        content: "Matricula";
     }
-
     td:nth-of-type(2):before {
         content: "DNI";
     }
-
     td:nth-of-type(3):before {
         content: "Nombre";
     }
-
     td:nth-of-type(4):before {
-        content: "Primer Apellido";
+        content: "Apellido";
     }
-
-    td:nth-of-type(5):before {
-        content: "Segundo apellido";
-    }
-
     td:nth-of-type(8):before {
         content: "Clase";
     }

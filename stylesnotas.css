@@ -2,19 +2,18 @@
         margin: 0;
         padding: 0;
         color: white;
-
         font-family: 'Rubik', sans-serif;
     }
-
+    
     html {
         color: white;
         font-family: 'Rubik', sans-serif;
     }
-
+    
     body {
         background-color: #043689;
     }
-
+    
     body::before {
         content: "";
         position: fixed;
@@ -24,10 +23,9 @@
         z-index: -1;
         filter: blur(7px);
     }
-
+    
     header {
         background-image: linear-gradient(rgba(0, 0, 0, 1) 15%, rgba(0, 0, 0, 0.6) 50%, rgba(0, 0, 0, 0.1) 90%, transparent 100%);
-
         display: flex;
         align-items: center;
         justify-content: space-evenly;
@@ -37,23 +35,23 @@
         text-align: center;
         position: fixed;
     }
-
+    
     #tablaAlumnos {
         width: 65vh;
         margin: 0 auto;
     }
-
+    
     .tabla1 {
         background-color: #022969;
         border-radius: 3vh;
         padding: 1vh;
         padding-top: 0;
     }
-
+    
     .alumnos {
         padding-top: 15vh;
     }
-
+    
     #editar {
         background: linear-gradient(to right, #043689, #137391);
         width: 10vh;
@@ -63,14 +61,14 @@
         border: none;
         transition: all 0.3s;
     }
-
+    
     #editar:hover {
         font-weight: 500;
         font-size: 1.9vh;
         background: white;
         color: #0b548d;
     }
-
+    
     #eliminar {
         background: linear-gradient(to right, #dc3545, #b41d6e);
         width: 12vh;
@@ -80,14 +78,14 @@
         border: none;
         transition: all 0.3s;
     }
-
+    
     #eliminar:hover {
         font-weight: 500;
         font-size: 1.9vh;
         background: white;
         color: #dc3545;
     }
-
+    
     #notas {
         background: linear-gradient(to right, #3aa359, #307a46);
         width: 9vh;
@@ -97,120 +95,118 @@
         border: none;
         transition: all 0.3s;
     }
-
+    
     #notas:hover {
         font-weight: 500;
         font-size: 1.9vh;
         background: white;
         color: #359e54;
     }
-
+    
     #titulo {
         text-align: center;
         font-size: 4vh;
         font-weight: 500;
         margin-bottom: 2vh;
     }
-
+    
     #oscuro {
         height: 100vh;
         background-color: rgba(0, 0, 0, 0.4);
     }
-
+    
     .primerosbordes {
         border-radius: 3vh 0 0 3vh;
         padding-left: 1vh;
     }
-
+    
     .ultimosbordes {
         border-radius: 0 3vh 3vh 0;
         padding-right: 1vh;
     }
-
+    
     .sinfondo {
         background-color: #022969;
         width: 4vh;
         padding: 1vh;
     }
-
+    
     table {
         text-align: center;
         width: 100%;
         align-items: center;
         justify-content: center;
     }
-
+    
     table .noresaltar:hover {
         background-image: none;
         background-color: none;
         background-color: transparent;
     }
-
+    
     table tr:hover {
         border-radius: 3vh;
         background-color: black;
         cursor: pointer;
     }
-
+    
     td {
         background-color: rgba(0, 0, 0, 0.5);
         padding: 1.2vh 0;
     }
-
-
+    
     td .sihover:hover {
         background-color: white;
         padding: 1.2vh 0;
     }
-
-
+    
     .titulos {
         padding-top: 1.5vh;
         padding-bottom: 1vh;
         font-weight: 500;
         font-size: 2vh;
     }
-
+    
     td {
         background-color: rgba(0, 0, 0, 0.5);
         padding: 1.2vh 0;
     }
-
+    
     .separaciones {
         width: 100%;
         border-spacing: 0 3px;
     }
-
+    
     .flechas {
         height: 1.6vh;
     }
-
+    
     .nav-logo {
         width: 25vh;
         cursor: pointer;
     }
-
+    
     .nav {
         list-style: none;
     }
-
+    
     .nav-links {
         list-style: none;
     }
-
+    
     .nav-links li {
         display: inline-block;
         padding: 0 20px;
     }
-
+    
     .nav-links li a {
         transition: all 0.3s ease 0s;
     }
-
+    
     .nav-links li a:hover {
         font-size: 2.4vh;
     }
-
+    
     .altaboton,
     li,
     a {
@@ -219,7 +215,7 @@
         color: white;
         text-decoration: none;
     }
-
+    
     .altaboton {
         padding: 9px 25px;
         color: white;
@@ -230,47 +226,46 @@
         cursor: pointer;
         transition: all 0.3s ease 0s;
     }
-
+    
     .altaboton:hover {
         background: white;
         color: #043689;
         font-size: 2.5vh;
     }
-
+    
     .flex {
         display: flex;
         align-items: center;
         justify-content: center;
     }
-
+    
     body::-webkit-scrollbar {
         width: 12px;
     }
-
+    
     body::-webkit-scrollbar-track {
         background: #120c2b;
     }
-
+    
     body::-webkit-scrollbar-thumb {
         background-color: #022969;
     }
-
     /* ------------ */
-
+    
     .inputs {
         font-weight: 300;
         margin-top: 2vh;
     }
-
+    
     .inputs label {
         margin-bottom: 0vh;
         display: block;
     }
-
+    
     form {
         display: block;
     }
-
+    
     .inputforms {
         height: 2vh;
         border-radius: 0.5vh;
@@ -282,7 +277,7 @@
         background-color: rgba(0, 0, 0, 1);
         color: white;
     }
-
+    
     .boton {
         margin-top: -2vh;
         display: block;
@@ -296,45 +291,44 @@
         cursor: pointer;
         transition: 0.5s;
     }
-
+    
     .boton:hover {
         background: white;
         color: #0444ab;
         font-size: 2.4vh;
         transition: 0.5s;
     }
-
+    
     #registrarse {
         color: white;
         font-weight: 300;
         font-size: 1.5vh;
         text-align: center;
     }
-
+    
     .logoutimg {
         height: 4vh;
         margin: 0.6vh;
         margin-right: 0.9vh;
         transition: all 0.3s ease 0s;
     }
-
+    
     .logoutimg:hover {
         height: 4.5vh;
         filter: grayscale(100%) brightness(50%) sepia(100%) hue-rotate(-50deg) saturate(1000%) contrast(1);
     }
-
+    
     .atrasimg {
         height: 4vh;
         margin: 0.6vh;
         margin-right: 0.9vh;
         transition: all 0.3s ease 0s;
     }
-
+    
     .atrasimg:hover {
         height: 4.5vh;
         filter: brightness(0%);
     }
-
     /* .boton {
         display: block;
         width: 100%;
@@ -354,8 +348,7 @@
         font-size: 2.2vh;
         transition: 0.5s;
     } */
-
-
+    
     .logoutboton {
         color: white;
         background: linear-gradient(to right, #022969, #011535);
@@ -365,12 +358,12 @@
         transition: all 0.3s ease 0s;
         margin-right: 5vh;
     }
-
+    
     .logoutboton:hover {
         color: #043689;
         background: white;
     }
-
+    
     .atrasboton {
         color: white;
         background: linear-gradient(to right, #022969, #011535);
@@ -380,16 +373,16 @@
         transition: all 0.3s ease 0s;
         margin-right: 5vh;
     }
-
+    
     .atrasboton:hover {
         color: #043689;
         background: white;
     }
-
+    
     .buscador {
         margin-left: 6vh;
     }
-
+    
     .buscador input {
         border-style: solid;
         border-color: white;
@@ -400,12 +393,12 @@
         color: #fff;
         border-radius: 4vh;
     }
-
+    
     .buscador input:focus {
         outline: none;
         background-color: rgba(0, 0, 0, 0.4);
     }
-
+    
     .buscador button {
         margin-left: -5vh;
         color: white;
@@ -419,52 +412,42 @@
         cursor: pointer;
         transition: all 0.3s ease 0s;
     }
-
+    
     .buscador button:hover {
         background: white;
         color: #043689;
         font-size: 2vh;
         height: 5vh;
     }
-
     /* -------------- */
-
-
+    
     @media only screen and (max-width: 950px) {
         .column-3 {
             width: 50%;
         }
-
         header {
             height: 20vh;
             flex-direction: column;
             align-items: center;
         }
-
         .headerparte1 {
             width: 100%;
         }
-
         .box {
             width: 70%;
         }
-
         .popup {
             width: 70%;
         }
-
         #titulo {
             margin-top: 5vh;
         }
-
         .alumnos {
             padding-top: 16vh;
         }
-
         .buscador input {
             background-color: black;
         }
-
         table,
         thead,
         tbody,
@@ -473,26 +456,21 @@
         tr {
             display: block;
         }
-
         thead tr {
             position: absolute;
             top: -9999px;
             left: -9999px;
         }
-
         table tr {
             margin: 3vh 0 5vh 0;
             margin-top: 1vh;
             padding-top: 1vh;
         }
-
-
         td {
             border: none;
             position: relative;
             padding-left: 50%;
         }
-
         td:before {
             position: absolute;
             top: 2;
@@ -501,62 +479,43 @@
             padding-right: 10px;
             white-space: nowrap;
         }
-
         .tabla1 {
             margin-top: 10vh;
         }
-
         table tr:hover {
             background-color: transparent;
         }
-
         .primerosbordes {
             border-radius: 3vh 3vh 0 0;
             padding-left: 50%;
         }
-
         .ultimosbordes {
             border-radius: 0 0 3vh 3vh;
             padding-right: 1vh;
         }
-
         .sinfondo {
             width: 97%;
         }
-
         #eliminar {
             width: 100%;
         }
-
         #editar {
             width: 100%;
         }
-
         /*
 		Label the data
     You could also use a data-* attribute and content for this. That way "bloats" the HTML, this way means you need to keep HTML and CSS in sync. Lea Verou has a clever way to handle with text-shadow.
 		*/
         td:nth-of-type(1):before {
-            content: "Id";
+            content: "Matricula";
         }
-
         td:nth-of-type(2):before {
             content: "DNI";
         }
-
         td:nth-of-type(3):before {
             content: "Nombre";
         }
-
         td:nth-of-type(4):before {
-            content: "Primer Apellido";
-        }
-
-        td:nth-of-type(5):before {
-            content: "Segundo apellido";
-        }
-
-        td:nth-of-type(8):before {
-            content: "Clase";
+            content: "Apellidos";
         }
     }

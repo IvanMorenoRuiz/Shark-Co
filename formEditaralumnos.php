@@ -29,6 +29,54 @@ if (!isset($_SESSION['dni_prof'])) {
             margin-top: 5px;
         }
     </style>
+     <script>
+        window.addEventListener('DOMContentLoaded', (event) => {
+            const form = document.querySelector('form');
+            const dniInput = document.getElementById('dni_alu');
+            const nombreInput = document.getElementById('nombre_alu');
+            const apellidoInput = document.getElementById('apellido_alu');
+            const submitButton = document.querySelector('.boton');
+
+            form.addEventListener('submit', function (event) {
+                let hasError = false;
+
+                if (!/^\d{8}[A-Z]$/.test(dniInput.value)) {
+                    dniInput.nextElementSibling.innerHTML = 'Número de DNI incorrecto.';
+                    hasError = true;
+                } else {
+                    dniInput.nextElementSibling.innerHTML = '';
+                }
+
+                if (!/^[A-Za-zÁáÉéÍíÓóÚúÑñÜü\s]+$/.test(nombreInput.value)) {
+                    nombreInput.nextElementSibling.innerHTML = 'Introduce el nombre.';
+                    hasError = true;
+                } else {
+                    nombreInput.nextElementSibling.innerHTML = '';
+                }
+
+                if (!/^[A-Za-zÁáÉéÍíÓóÚúÑñÜü\s]+$/.test(apellidoInput.value)) {
+                    apellidoInput.nextElementSibling.innerHTML = 'Introduce el apellido.';
+                    hasError = true;
+                } else {
+                    apellidoInput.nextElementSibling.innerHTML = '';
+                }
+
+                if (hasError) {
+                    event.preventDefault(); // Evita que el formulario se envíe si hay errores
+                    submitButton.disabled = true; // Deshabilita el botón si hay errores
+                }
+            });
+
+            // Habilitar el botón si los campos son válidos nuevamente
+            dniInput.addEventListener('input', enableButton);
+            nombreInput.addEventListener('input', enableButton);
+            apellidoInput.addEventListener('input', enableButton);
+
+            function enableButton() {
+                submitButton.disabled = false; // Habilitar el botón cuando se corrija un campo inválido
+            }
+        });
+    </script>
 </head>
 
 <body>
@@ -40,80 +88,29 @@ if (!isset($_SESSION['dni_prof'])) {
     </header>
     <div class="flex" id="oscuro">
         <div class="container">
-            <h2 id="titulo">Formulario Alta Alumno</h2>
-
-            <?php
-            // Inicializar las variables para almacenar los valores y errores
-            $num_matricula = $dni_alu = $nombre_alu = $apellido_alu = '';
-            $num_matricula_error = $dni_alu_error = $nombre_alu_error = $apellido_alu_error = '';
-            $form_valid = true;
-
-            // Si se envió el formulario
-            if ($_SERVER["REQUEST_METHOD"] == "POST") {
-
-                // Validación para dni_alu
-                $dni_alu = $_POST["dni_alu"];
-                if (empty($dni_alu) || !preg_match("/^\d{8}[A-Z]$/", $dni_alu)) {
-                    $dni_alu_error = 'Número de DNI incorrecto.';
-                    $form_valid = false;
-                } else {
-                    // Verificación de la letra del DNI
-                    $dniNumero = (int) substr($dni_alu, 0, 8);
-                    $letras = 'TRWAGMYFPDXBNJZSQVHLCKE';
-                    $letraCalculada = $letras[$dniNumero % 23];
-                    if ($letraCalculada !== $dni_alu[8]) {
-                        $dni_alu_error = 'La letra no es la correcta.';
-                        $form_valid = false;
-                    }
-                }
-
-                // Validación para nombre_alu
-                $nombre_alu = $_POST["nombre_alu"];
-                if (empty($nombre_alu) || !preg_match("/^[A-Za-zÁáÉéÍíÓóÚúÑñÜü\s]+$/", $nombre_alu)) {
-                    $nombre_alu_error = 'Introduce el nombre.';
-                    $form_valid = false;
-                }
-
-                // Validación para apellido_alu
-                $apellido_alu = $_POST["apellido_alu"];
-                if (empty($apellido_alu) || !preg_match("/^[A-Za-zÁáÉéÍíÓóÚúÑñÜü\s]+$/", $apellido_alu)) {
-                    $apellido_alu_error = 'Introduce el apellido.';
-                    $form_valid = false;
-                }
-            }
-
-            // Si todos los campos son válidos, redirige a altaalumnos.php
-            if ($form_valid && $_SERVER["REQUEST_METHOD"] == "POST") {
-                header("Location: ./inc/altaalumnos.php");
-                exit();
-            }
-            ?>
+            <h2 id="titulo">Formulario Editar Alumno</h2>
 
             <form action="./inc/editaralumnos.php" method="POST">
 
                 <div class="inputs">
                 <input type="text" hidden name="num_matricula" value="<?php echo $_GET['num_matricula'] ?>" id="num_matricula" class="form-control nota" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
                     <label for="dni_alu">DNI:</label>
-                    <input type="text" name="dni_alu" id="dni_alu" class="form-control nombre_alu" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value="<?php echo htmlspecialchars($dni_alu); ?>">
-                    <?php if ($dni_alu_error) : ?>
-                        <p class="error-message"><?php echo $dni_alu_error; ?></p>
-                    <?php endif; ?>
+                    <input type="text" name="dni_alu" id="dni_alu" class="form-control nombre_alu" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value="<?php echo $_GET['dniAlu']; ?>">
+                 <p></p>
                 </div>
 
                 <div class="inputs">
                     <label for="nombre_alu">Nombre:</label>
-                    <input type="text" name="nombre_alu" id="nombre_alu" class="form-control inputforms" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value="<?php echo htmlspecialchars($nombre_alu); ?>">
-                    <?php if ($nombre_alu_error) : ?>
-                        <p class="error-message"><?php echo $nombre_alu_error; ?></p>
-                    <?php endif; ?>
+                    <input type="text" name="nombre_alu" id="nombre_alu" class="form-control inputforms" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value="<?php echo $_GET['nombre_alu']; ?>">
+                    <p></p>
+
                 </div>
 
                 <div class="inputs">
                     <label for="apellido_alu">Apellidos:</label>
-                    <input type="text" name="apellido_alu" id="apellido_alu" class="form-control inputforms" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value="<?php echo htmlspecialchars($apellido_alu); ?>">
-                    <?php if ($apellido_alu_error) : ?>
-                        <p class="error-message"><?php echo $apellido_alu_error; ?></p>
-                    <?php endif; ?>
+                    <input type="text" name="apellido_alu" id="apellido_alu" class="form-control inputforms" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value="<?php echo $_GET['apellidoAlu']; ?>">
+                    <p></p>
+
                 </div>
 
                 <button type="submit" class="boton">Confirmar</button>
