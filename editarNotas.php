@@ -32,7 +32,7 @@ if (!isset($_SESSION['dni_prof'])) {
     </header>
     <div class="flex" id="oscuro">
         <div class="container">
-            <h2 id="titulo">Editor de Notas</h2>
+            <h2 id="titulo">SHARKANDCO - Editor de Notas</h2>
             <form action="./inc/editarNotas.php" method="GET">
                 <div class="inputs">
                     <label for="asignatura">Asignatura:</label>

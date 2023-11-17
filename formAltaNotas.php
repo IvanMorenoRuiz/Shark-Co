@@ -1,125 +1,97 @@
 <?php
 session_start();
 if (!isset($_SESSION['dni_prof'])) {
-    header("location: ./index.html");
+    header("location: ./index.html"); 
     exit;
 } else if (isset($_GET['logout'])) {
     session_destroy();
     header("location: ./index.html");
     exit;
 }
+
+include_once("./inc/conexion.php");
 ?>
 
 <!DOCTYPE html>
-<html lang="es">
+<html>
 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SHARKANDCO - Editar Alumno</title>
+    <title>SHARKANDCO - Alta Notas</title>
     <link rel="shortcut icon" href="./src/LOGO/logo.png" type="image/x-icon">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500&display=swap" rel="stylesheet">
-    <style>
-        .error-message {
-            color: red;
-            font-size: 14px;
-            margin-top: 5px;
-        }
-    </style>
-     <script>
-        window.addEventListener('DOMContentLoaded', (event) => {
-            const form = document.querySelector('form');
-            const dniInput = document.getElementById('dni_alu');
-            const nombreInput = document.getElementById('nombre_alu');
-            const apellidoInput = document.getElementById('apellido_alu');
-            const submitButton = document.querySelector('.boton');
-
-            form.addEventListener('submit', function (event) {
-                let hasError = false;
-
-                if (!/^\d{8}[A-Z]$/.test(dniInput.value)) {
-                    dniInput.nextElementSibling.innerHTML = 'Número de DNI incorrecto.';
-                    hasError = true;
-                } else {
-                    dniInput.nextElementSibling.innerHTML = '';
-                }
-
-                if (!/^[A-Za-zÁáÉéÍíÓóÚúÑñÜü\s]+$/.test(nombreInput.value)) {
-                    nombreInput.nextElementSibling.innerHTML = 'Introduce el nombre.';
-                    hasError = true;
-                } else {
-                    nombreInput.nextElementSibling.innerHTML = '';
-                }
-
-                if (!/^[A-Za-zÁáÉéÍíÓóÚúÑñÜü\s]+$/.test(apellidoInput.value)) {
-                    apellidoInput.nextElementSibling.innerHTML = 'Introduce el apellido.';
-                    hasError = true;
-                } else {
-                    apellidoInput.nextElementSibling.innerHTML = '';
-                }
-
-                if (hasError) {
-                    event.preventDefault(); // Evita que el formulario se envíe si hay errores
-                    submitButton.disabled = true; // Deshabilita el botón si hay errores
-                }
-            });
-
-            // Habilitar el botón si los campos son válidos nuevamente
-            dniInput.addEventListener('input', enableButton);
-            nombreInput.addEventListener('input', enableButton);
-            apellidoInput.addEventListener('input', enableButton);
-
-            function enableButton() {
-                submitButton.disabled = false; // Habilitar el botón cuando se corrija un campo inválido
-            }
-        });
-    </script>
 </head>
 
 <body>
     <header class="flex">
         <div class="nav">
-            <a href="./alumnos.php"><img class="nav-logo" src="./src/LOGO/LOGO NOMBRE SHARKANDCO.png" alt=""></a>
-     
+            <img src="./src/LOGO/logoletrasgrandes.png" alt="">
         </div>
     </header>
     <div class="flex" id="oscuro">
         <div class="container">
-            <h2 id="titulo">Formulario Editar Alumno</h2>
-
-            <form action="./inc/editaralumnos.php" method="POST">
+            <h2 id="titulo">Formulario Añadir Notas</h2>
+            <form action="./inc/altanotas.php" method="POST" onsubmit="return validateForm()">
+                <input hidden type="text" value="<?php echo $_GET['num_matricula']?>" name="num_matricula" id="num_matricula" >
 
                 <div class="inputs">
-                <input type="text" hidden name="num_matricula" value="<?php echo $_GET['num_matricula'] ?>" id="num_matricula" class="form-control nota" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
-                    <label for="dni_alu">DNI:</label>
-                    <input type="text" name="dni_alu" id="dni_alu" class="form-control nombre_alu" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value="<?php echo $_GET['dniAlu']; ?>">
-                 <p></p>
+                    <label for="asignatura">Asignatura:</label>
+                    <select name="asignatura" id="asignatura" class="form-control asignatura" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                        <?php
+                        // Consulta para obtener la lista de asignaturas
+                        $query = "SELECT id_assignatura, nombre_assignatura FROM tbl_assignatura";
+                        $result = $conn->query($query);
+
+                        // Mostrar las opciones en el elemento select
+                        while ($row = $result->fetch_assoc()) {
+                            echo "<option value='" . $row['id_assignatura'] . "'>" . $row['nombre_assignatura'] . "</option>";
+                        }
+                        ?>
+                    </select>
                 </div>
 
                 <div class="inputs">
-                    <label for="nombre_alu">Nombre:</label>
-                    <input type="text" name="nombre_alu" id="nombre_alu" class="form-control inputforms" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value="<?php echo $_GET['nombre_alu']; ?>">
-                    <p></p>
-
+                    <label for="nota">Nota Número:</label>
+                    <input type="text" name="nota" id="nota" class="form-control nota" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" oninput="validateNota()">
+                    <p id="mensajeError" style='text-align: center; display: none;'>La nota debe estar entre 0 y 10.</p>
                 </div>
-
-                <div class="inputs">
-                    <label for="apellido_alu">Apellidos:</label>
-                    <input type="text" name="apellido_alu" id="apellido_alu" class="form-control inputforms" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value="<?php echo $_GET['apellidoAlu']; ?>">
-                    <p></p>
-
-                </div>
-
-                <button type="submit" class="boton">Confirmar</button>
+                <button type="submit" class="boton" id="submitButton" disabled>Confirmar</button>
             </form>
         </div>
     </div>
-</body>
 
+    <script>
+    function validateNota() {
+        const inputNota = document.getElementById('nota');
+        const mensajeError = document.getElementById('mensajeError');
+        const submitButton = document.getElementById('submitButton');
+
+        // Reemplazar cualquier coma con un punto
+        inputNota.value = inputNota.value.replace(',', '.');
+
+        const valorNota = parseFloat(inputNota.value);
+        if (isNaN(valorNota) || valorNota > 10 || valorNota < 0) {
+            mensajeError.style.display = 'block';
+            submitButton.disabled = true;
+        } else {
+            mensajeError.style.display = 'none';
+            submitButton.disabled = false;
+        }
+    }
+
+    function validateForm() {
+
+        return !document.getElementById('submitButton').disabled;
+    }
+</script>
+
+</body>
 </html>
+
 
 
 <style>

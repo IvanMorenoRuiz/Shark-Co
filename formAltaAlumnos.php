@@ -39,7 +39,7 @@ if (!isset($_SESSION['dni_prof'])) {
     </header>
     <div class="flex" id="oscuro">
         <div class="container">
-            <h2 id="titulo">Formulario Alta Alumno</h2>
+            <h2 id="titulo">SHARKANDCO - Alta Alumno</h2>
 
             <?php
             // Inicializar las variables para almacenar los valores y errores

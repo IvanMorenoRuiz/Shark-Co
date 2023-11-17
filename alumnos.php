@@ -46,6 +46,21 @@ if (isset($_POST['eliminar_tbl_alumno'])) {
 }
 ?>
 
+<?php
+    // Procesar la solicitud de mostrar un número específico de alumnos
+    if (isset($_POST['mostrar'])) {
+    // Obtener el número de alumnos a mostrar del formulario
+    $numAlumnos = $_POST['numAlumnos'];
+
+    // Validar y ajustar el número de alumnos si es necesario
+    $numAlumnos = ($numAlumnos > 0 && $numAlumnos <= 100) ? $numAlumnos : 10; // Establecer un valor predeterminado si es necesario
+
+    // Realizar la consulta SQL limitando el número de resultados
+    $query = "SELECT * FROM tbl_alumno LIMIT $numAlumnos";
+    $result1 = $conn->query($query);
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -86,6 +101,12 @@ if (isset($_POST['eliminar_tbl_alumno'])) {
                     <button type="submit" name="buscar">Buscar</button>
                 </form>
             </div>
+            <div class="buscador flex">
+            <form class="buscador flex" method="POST" action="">
+                <input type="text" id="numAlumnos" name="numAlumnos" placeholder="Número de alumnos a mostrar:" min="1" max="100">
+                <button type="submit" id="mostrar" name="mostrar">Mostrar</button>
+            </form>
+        </div>
         </header>
         <div class="alumnos">
             <!-- TABLA tbl_alumnoS -->
