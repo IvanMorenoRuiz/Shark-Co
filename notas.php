@@ -57,7 +57,7 @@ if (isset($_POST['buscar'])) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shark & Co</title>
+    <title>SHARKANDCO - Notas</title>
     <link rel="shortcut icon" href="./src/LOGO/_55770202-d102-434c-ab15-1b4f4bb9e1a3.png" type="image/x-icon">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -81,7 +81,9 @@ if (isset($_POST['buscar'])) {
             <div id="tablaAlumnos">
                 <div>
                 <h3 id="titulo">Notas de  <?php echo $nombre; ?> </h3>
-
+                <td class='sinfondo nohover'>
+                    <a href='formAltaNotas.php?num_matricula=<?php echo $num_matricula; ?>' button id='formnotas'>Añadir</button></a>
+                </td>
                 </div>
                 <table class="tabla1 separaciones">
 
