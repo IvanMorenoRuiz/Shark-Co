@@ -1,3 +1,15 @@
+<?php
+session_start();
+if (!isset($_SESSION['dni_prof'])) {
+    header("location: ./index.html");
+    exit;
+} else if (isset($_GET['logout'])) {
+    session_destroy();
+    header("location: ./index.html");
+    exit;
+}
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -98,9 +110,8 @@
                 <div class="inputs">
                     <label for="apellido_alu">Apellidos:</label>
                     <input type="text" name="apellido_alu" id="apellido_alu" class="form-control inputforms" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value="<?php echo htmlspecialchars($apellido_alu); ?>">
-                    <?php if ($apellido_alu_error) : ?>
-                        <p class="error-message"><?php echo $apellido_alu_error; ?></p>
-                    <?php endif; ?>
+                    <?php if (isset($_GET['error'])) {echo " <br> <br> <p style='text-align: center;'>El Alumno ya esta dado de Alta. </p>"; } ?>
+
                 </div>
 
                 <button type="submit" class="boton">Confirmar</button>

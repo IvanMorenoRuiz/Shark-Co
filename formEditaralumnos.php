@@ -1,3 +1,15 @@
+<?php
+session_start();
+if (!isset($_SESSION['dni_prof'])) {
+    header("location: ./index.html");
+    exit;
+} else if (isset($_GET['logout'])) {
+    session_destroy();
+    header("location: ./index.html");
+    exit;
+}
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -78,9 +90,10 @@
             }
             ?>
 
-            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
+            <form action="./inc/editaralumnos.php" method="POST">
 
                 <div class="inputs">
+                <input type="text" hidden name="num_matricula" value="<?php echo $_GET['num_matricula'] ?>" id="num_matricula" class="form-control nota" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
                     <label for="dni_alu">DNI:</label>
                     <input type="text" name="dni_alu" id="dni_alu" class="form-control nombre_alu" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value="<?php echo htmlspecialchars($dni_alu); ?>">
                     <?php if ($dni_alu_error) : ?>

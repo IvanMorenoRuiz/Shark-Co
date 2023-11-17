@@ -1,10 +1,13 @@
 <?php
 session_start();
-
-if(!filter_has_var(INPUT_POST,'inicio')) {
-    header('Location : '. '../login.php');
-    exit();
-    } else {// comprobamos que la solicitud se envie con POST
+if (!isset($_POST['inicio'])) {
+    header("location: ../index.html");
+    exit;
+} else if (isset($_GET['logout'])) {
+    session_destroy();
+    header("location: ../index.html");
+    exit;
+}else {// comprobamos que la solicitud se envie con POST
     $email = $_POST["email"];
     $password = $_POST["password"];
 // Validación del dominio del correo electrónico

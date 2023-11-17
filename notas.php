@@ -2,11 +2,11 @@
 
 session_start();
 if (!isset($_SESSION['dni_prof'])) {
-    header("location: ./index.php");
+    header("location: ./index.html");
     exit;
 } else if (isset($_GET['logout'])) {
     session_destroy();
-    header("location: ./index.php");
+    header("location: ./index.html");
     exit;
 }
 
@@ -102,7 +102,7 @@ if (isset($_POST['buscar'])) {
                                 echo "<tr>";
                                 echo "<td class='primerosbordes'>" . $row["nombre_assignatura"] . "</td>";
                                 echo "<td class='ultimosbordes'>" . $row["nota_alumno"] . "</td>";
-                                echo "<td class='sinfondo nohover'><a href='editarNotas.php?nombre_assignatura=" . $row["nombre_assignatura"] . "&nota_alumno=" . $row["nota_alumno"] . "'><button id='notas'>Editar</button></a></td>";
+                                echo "<td class='sinfondo nohover'><a href='editarNotas.php?nombre_assignatura=" . $row["nombre_assignatura"] . "&nota_alumno=" . $row["nota_alumno"] . "&idAlu=".$row['id_alumno_nota_assignatura']."'><button id='notas'>Editar</button></a></td>";
                                 echo "</tr>";
                             }
                         }

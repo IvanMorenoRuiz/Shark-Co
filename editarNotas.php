@@ -1,3 +1,15 @@
+<?php
+session_start();
+if (!isset($_SESSION['dni_prof'])) {
+    header("location: ./index.html");
+    exit;
+} else if (isset($_GET['logout'])) {
+    session_destroy();
+    header("location: ./index.html");
+    exit;
+}
+?>
+
 <!DOCTYPE html>
 <html>
 
@@ -7,7 +19,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>New Vision</title>
     <link rel="shortcut icon" href="./src/LOGO/logo.png" type="image/x-icon">
-    <link rel="preconnect" href="https://fonts.googleapis.com%22%3E/
+    <link rel="preconnect" href="https://fonts.googleapis.com%22%3E/">
     <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500&display=swap" rel="stylesheet">
 </head>
@@ -21,33 +33,53 @@
     <div class="flex" id="oscuro">
         <div class="container">
             <h2 id="titulo">Editor de Notas</h2>
-            <form action="altaalumnos.php" method="POST">
+            <form action="./inc/editarNotas.php" method="GET">
                 <div class="inputs">
                     <label for="asignatura">Asignatura:</label>
-                    <select name="asignatura" id="asignatura" class="form-control asignatura" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                    <!-- <select name="asignatura" id="asignatura" class="form-control asignatura" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"> -->
                     <?php
                     include_once('./inc/conexion.php');
                     // Consulta para obtener la lista de asignaturas
                     $query = "SELECT id_assignatura, nombre_assignatura FROM tbl_assignatura";
                     $result = $conn->query($query);
-
+                    echo $_GET['nombre_assignatura'];
                     // Mostrar las opciones en el elemento select
-                    while ($row = $result->fetch_assoc()) {
-                        echo "<option value='" . $row['id_assignatura'] . "'>" . $row['nombre_assignatura'] . "</option>";
-                    }
+                    // while ($row = $result->fetch_assoc()) {
+                    //     echo "<option value='" . $row['id_assignatura'] . "'>" . $row['nombre_assignatura'] . "</option>";
+                    // }
 
                     ?>
-                </select>
+                <!-- </select> -->
                 </div>
                 <div class="inputs">
-                    <label for="nota">Nota Número:</label>
-                    <input type="number" name="nota" value="<?php echo $_GET['nota_alumno'] ?>" id="nota" class="form-control nota" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" min="0" max="10">
-                </div>
-                <button type="submit" class="boton" src="../inc/altanotas.php">Confirmar</button>
+    <label for="nota">Nota Número:</label>
+    <input type="text" hidden name="idAlu" value="<?php echo $_GET['idAlu'] ?>" id="idAlu" class="form-control nota" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+
+    <input type="text" name="nota" value="<?php echo $_GET['nota_alumno'] ?>" id="notaInput" class="form-control nota" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+    <p id="mensajeError" style='text-align: center; display: none;'>La nota debe estar entre 0 y 10.</p>
+</div>
+<button type="submit" name="submit" id="submitButton" class="boton">Confirmar</button>
             </form>
         </div>
     </div>
-    
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const inputNota = document.getElementById('notaInput');
+        const mensajeError = document.getElementById('mensajeError');
+        const submitButton = document.getElementById('submitButton');
+
+        inputNota.addEventListener('input', function() {
+            const valorNota = parseFloat(inputNota.value);
+            if (valorNota > 10 || valorNota < 0) {
+                mensajeError.style.display = 'block';
+                submitButton.disabled = true;
+            } else {
+                mensajeError.style.display = 'none';
+                submitButton.disabled = false;
+            }
+        });
+    });
+</script>
 </body>
 
 <style>
