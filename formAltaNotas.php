@@ -1,4 +1,14 @@
 <?php
+session_start();
+if (!isset($_SESSION['dni_prof'])) {
+    header("location: ./index.html"); 
+    exit;
+} else if (isset($_GET['logout'])) {
+    session_destroy();
+    header("location: ./index.html");
+    exit;
+}
+
 include_once("./inc/conexion.php");
 ?>
 
@@ -25,7 +35,9 @@ include_once("./inc/conexion.php");
     <div class="flex" id="oscuro">
         <div class="container">
             <h2 id="titulo">Formulario Añadir Notas</h2>
-            <form action="./inc/altanota.php?num_matricula=<?php echo $num_matricula; ?>" method="POST">
+            <form action="./inc/altanotas.php" method="POST" onsubmit="return validateForm()">
+                <input hidden type="text" value="<?php echo $_GET['num_matricula']?>" name="num_matricula" id="num_matricula" >
+
                 <div class="inputs">
                     <label for="asignatura">Asignatura:</label>
                     <select name="asignatura" id="asignatura" class="form-control asignatura" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
@@ -44,14 +56,42 @@ include_once("./inc/conexion.php");
 
                 <div class="inputs">
                     <label for="nota">Nota Número:</label>
-                    <input type="number" name="nota" id="nota" class="form-control nota" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" min="0" max="10">
+                    <input type="text" name="nota" id="nota" class="form-control nota" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" oninput="validateNota()">
+                    <p id="mensajeError" style='text-align: center; display: none;'>La nota debe estar entre 0 y 10.</p>
                 </div>
-                <button type="submit" class="boton">Confirmar</button>
+                <button type="submit" class="boton" id="submitButton" disabled>Confirmar</button>
             </form>
         </div>
     </div>
+
+    <script>
+    function validateNota() {
+        const inputNota = document.getElementById('nota');
+        const mensajeError = document.getElementById('mensajeError');
+        const submitButton = document.getElementById('submitButton');
+
+        // Reemplazar cualquier coma con un punto
+        inputNota.value = inputNota.value.replace(',', '.');
+
+        const valorNota = parseFloat(inputNota.value);
+        if (isNaN(valorNota) || valorNota > 10 || valorNota < 0) {
+            mensajeError.style.display = 'block';
+            submitButton.disabled = true;
+        } else {
+            mensajeError.style.display = 'none';
+            submitButton.disabled = false;
+        }
+    }
+
+    function validateForm() {
+
+        return !document.getElementById('submitButton').disabled;
+    }
+</script>
+
 </body>
 </html>
+
 
 
 <style>
