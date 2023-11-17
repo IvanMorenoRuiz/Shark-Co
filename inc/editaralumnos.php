@@ -1,11 +1,11 @@
 <?php
 session_start();
 if (!isset($_SESSION['dni_prof'])) {
-    header("location: ./index.html");
+    header("location: ../index.html");
     exit;
 } else if (isset($_GET['logout'])) {
     session_destroy();
-    header("location: ./index.html");
+    header("location: ../index.html");
     exit;
 }
 // if (!isset($_POST['num_matricula']) || empty($_POST['num_matricula']) || empty($_POST['dni_alu']) || empty($_POST['nombre_alu']) || empty($_POST['apellido_alu']))  {

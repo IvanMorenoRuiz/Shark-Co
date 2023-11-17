@@ -34,8 +34,8 @@ if (!isset($_SESSION['dni_prof'])) {
 <body>
     <header class="flex">
         <div class="nav">
-            <img src="./src/LOGO/logoletrasgrandes.png" alt="">
-        </div>
+                <a href="./alumnos.php"><img class="nav-logo" src="./src/LOGO/LOGO NOMBRE SHARKANDCO.png" alt=""></a>
+            </div>    
     </header>
     <div class="flex" id="oscuro">
         <div class="container">

@@ -2,11 +2,11 @@
 
 session_start();
 if (!isset($_SESSION['dni_prof'])) {
-    header("location: ./index.html");
+    header("location: ../index.html");
     exit;
 } else if (isset($_GET['logout'])) {
     session_destroy();
-    header("location: ./index.html");
+    header("location: ../index.html");
     exit;
 }
 if (!isset($_GET['num_matricula']) || empty($_GET['num_matricula'])) {

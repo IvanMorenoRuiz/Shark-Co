@@ -70,7 +70,6 @@ if (isset($_POST['buscar'])) {
     <div id="oscuro">
         <header>
             <div class="flex headerparte1">
-                <a href="./inc/"><button class="logoutboton"><img class="logoutimg" src="./src/LOGOUT.png" alt=""></button></a>
                 <a href="./alumnos.php"><img class="nav-logo" src="./src/LOGO/LOGO NOMBRE SHARKANDCO.png" alt=""></a>
             </div>
             <div class="alta flex">
