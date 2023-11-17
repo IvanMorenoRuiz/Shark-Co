@@ -13,7 +13,6 @@ try {
     session_start();
     $nota = $_GET['nota'];
     $idAlu = $_GET['idAlu'];
-    $notaInt = (int)$nota;
     $idAluInt = (int)$idAlu;
     echo $nota;
     echo $idAlu;
@@ -25,7 +24,7 @@ include('./conexion.php');
 
     $stmt = mysqli_stmt_init($conn);
     $stmt = mysqli_prepare($conn, $query1);
-    mysqli_stmt_bind_param($stmt, "ii", $notaInt, $idAluInt);
+    mysqli_stmt_bind_param($stmt, "si", $nota, $idAluInt);
     mysqli_stmt_execute($stmt);
 
     $result1 = mysqli_stmt_get_result($stmt);

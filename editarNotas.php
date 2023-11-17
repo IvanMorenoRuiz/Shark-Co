@@ -32,7 +32,7 @@ if (!isset($_SESSION['dni_prof'])) {
     </header>
     <div class="flex" id="oscuro">
         <div class="container">
-            <h2 id="titulo">SHARKANDCO - Editor de Notas</h2>
+            <h2 id="titulo">Editor de Notas</h2>
             <form action="./inc/editarNotas.php" method="GET">
                 <div class="inputs">
                     <label for="asignatura">Asignatura:</label>
@@ -52,7 +52,7 @@ if (!isset($_SESSION['dni_prof'])) {
                 <!-- </select> -->
                 </div>
                 <div class="inputs">
-    <label for="nota">Nota Número:</label>
+    <label for="nota">Nota NÃºmero:</label>
     <input type="text" hidden name="idAlu" value="<?php echo $_GET['idAlu'] ?>" id="idAlu" class="form-control nota" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
 
     <input type="text" name="nota" value="<?php echo $_GET['nota_alumno'] ?>" id="notaInput" class="form-control nota" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
@@ -68,9 +68,12 @@ if (!isset($_SESSION['dni_prof'])) {
         const mensajeError = document.getElementById('mensajeError');
         const submitButton = document.getElementById('submitButton');
 
-        inputNota.addEventListener('input', function() {
+        inputNota.addEventListener('change', function() {
+            // Reemplazar la coma por un punto
+            inputNota.value = inputNota.value.replace(',', '.');
+
             const valorNota = parseFloat(inputNota.value);
-            if (valorNota > 10 || valorNota < 0) {
+            if (isNaN(valorNota) || valorNota > 10 || valorNota < 0) {
                 mensajeError.style.display = 'block';
                 submitButton.disabled = true;
             } else {
@@ -80,6 +83,7 @@ if (!isset($_SESSION['dni_prof'])) {
         });
     });
 </script>
+
 </body>
 
 <style>
