@@ -104,6 +104,7 @@ if (isset($_POST['buscar'])) {
                                 echo "<td class='primerosbordes'>" . $row["nombre_assignatura"] . "</td>";
                                 echo "<td class='ultimosbordes'>" . $row["nota_alumno"] . "</td>";
                                 echo "<td class='sinfondo nohover'><a href='editarNotas.php?nombre_assignatura=" . $row["nombre_assignatura"] . "&nota_alumno=" . $row["nota_alumno"] . "&idAlu=".$row['id_alumno_nota_assignatura']."'><button id='notas'>Editar</button></a></td>";
+                                echo "<td class='sinfondo nohover'><a href='./inc/eliminarNotas.php?nombre_assignatura=" . $row["nombre_assignatura"] . "&nota=" . $row["nota_alumno"] . "&idAlu=".$row['id_alumno_nota_assignatura']."'><button id='eliminar'>Eliminar</button></a></td>";
                                 echo "</tr>";
                             }
                         }

@@ -9,7 +9,6 @@ if (!isset($_SESSION['dni_prof'])) {
     exit;
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="es">
 

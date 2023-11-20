@@ -27,7 +27,7 @@ if (isset($_POST['buscar'])) {
     $termino_busqueda = $_POST['nombre'];
 
     if (is_numeric($termino_busqueda)) {
-        $query = "SELECT * FROM tbl_alumno WHERE num_matricula = $termino_busqueda ORDER BY $order";
+        $query = "SELECT * FROM tbl_alumno WHERE num_matricula LIKE '%$termino_busqueda%' ORDER BY $order";
     } else {
         $query = "SELECT * FROM tbl_alumno WHERE nombre_alu LIKE '%$termino_busqueda%' ORDER BY $order";
     }
@@ -96,6 +96,7 @@ if (isset($_POST['eliminar_tbl_alumno'])) {
             </nav> -->
             <div class="alta flex">
                 <a href="./formAltaAlumnos.php"><button class="altaboton button flex">Alta</button></a>
+                <a href="./notasAlumnos.php"><button class="altaboton button flex">Notas</button></a>
                 <form class="buscador flex" method="POST" action="">
                     <input type="text" name="nombre" placeholder="Nombre/Matricula">
                     <button type="submit" name="buscar">Buscar</button>
